@@ -21,6 +21,14 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/aboutUs', function () {
+    return view('aboutUs');
+});
+
 Route::get('/sign-up', function () {
     return view('signup');
 });

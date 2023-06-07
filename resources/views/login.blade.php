@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
     <link href="{{asset('css/header.css')}}" rel="stylesheet">
     <link href="{{asset('css/login.css')}}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{asset('images/favIcon.png')}}">
 
-    <title>Document</title>
+    <title>Oxyrich</title>
 </head>
 
 <body>
@@ -30,14 +31,14 @@
                             <p class='pb-3 greet'>Sign in to your account</p>
                             <div class='px-4'>
                                 <label class='px-3' for='name'>Name</label>
-                                <input type='name' class='form-control' />
+                                <input type='name' class='form-control' required/>
                                 <label class='px-3' for='password'>Password</label>
-                                <input type='password' class='form-control' />
+                                <input type='password' class='form-control' required/>
                                 <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault">
                                 <label class="form-check-label mt-1" for="flexCheckDefault">Remember me</label>
                                 <!-- forgot password link -->
                                 <a href="#" class="text-decoration-none forgot float-end mt-1">Forgot Password?</a>
-                                <button class='btn loginBtn mt-4 btn-primary'>Login</button>
+                                <button class='btn loginBtn mt-4'>Login</button>
                                 </div>
                             </form>
                         </div>
@@ -55,5 +56,7 @@
 
 </body>
 <script src="{{asset('js/header.js')}}"></script>
-
+<script>
+    document.getElementById("login").classList.add("active");
+</script>
 </html>

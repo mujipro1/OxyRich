@@ -17,10 +17,10 @@ navBarCode = `
       <a id='home' class="nav-link" href="/home">Home</a>
     </li>
     <li class="nav-item">
-      <a id='assistance' class="nav-link" href="/assistance">Get Assistance</a>
+      <a id='login' class="nav-link" href="/login">Login</a>
     </li>
     <li class="nav-item">
-      <a id='volunteer' class="nav-link" href="/volunteer">Volunteer</a>
+      <a id='aboutUs' href='/aboutUs' class="nav-link">About Us</a>
     </li>
     <li class="nav-item">
       <a id='contact' class="nav-link" href="/contact">Contact</a>
