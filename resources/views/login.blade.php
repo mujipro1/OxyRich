@@ -15,6 +15,13 @@
 </head>
 
 <body>
+
+    @if(Session::get('fail'))
+    <div class="alert alert-danger">
+        {{Session::get('fail')}}
+    </div>
+    @endif
+
     <div class="c1">
         <div class="container pb-5">
             <div class="row">
@@ -26,17 +33,17 @@
             <div class='container'>
                 <div class='row crow py-1'>
                     <div class='col-md-6 my-3 side2'>
-                        <form>
+                        <form action="/submit-form" method='post'>
+                            @CSRF
                             <h3 class='pt-4 greet mt-3'>Hey, Hello👋</h3>
                             <p class='pb-3 greet'>Sign in to your account</p>
                             <div class='px-4'>
-                                <label class='px-3' for='name'>Name</label>
-                                <input type='name' class='form-control' required/>
+                                <label for='name' class='px-3' for='name'>Name</label>
+                                <input type='name' name='username' class='form-control' required/>
                                 <label class='px-3' for='password'>Password</label>
-                                <input type='password' class='form-control' required/>
+                                <input type='password' name='password' class='form-control' required/>
                                 <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault">
                                 <label class="form-check-label mt-1" for="flexCheckDefault">Remember me</label>
-                                <!-- forgot password link -->
                                 <a href="#" class="text-decoration-none forgot float-end mt-1">Forgot Password?</a>
                                 <button class='btn loginBtn mt-4'>Login</button>
                                 </div>

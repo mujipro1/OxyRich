@@ -15,22 +15,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/home', function () {
     return view('home');
-});
+}) -> name('home');
 
 Route::get('/login', function () {
     return view('login');
-});
+}) -> name('login');
 
 Route::get('/contact', function () {
     return view('contact');
-});
+}) -> name('contact');
+
+Route::post('/submit-form', 'App\Http\Controllers\UserController@submit')->name('submit-form');
 
 Route::get('/aboutUs', function () {
     return view('aboutUs');
-});
+}) -> name('aboutUs');
 
 Route::get('/sign-up', function () {
     return view('signup');
-});
+}) -> name('sign-up');
 
-Route::post('/submit-form', 'App\Http\Controllers\UserController@submit')->name('submit-form');
+
+Route::get('/customer', function () {
+    return view('customerView');
+}) -> name('customer');

@@ -1,0 +1,11 @@
+body{
+    background-color: rgba(229, 237, 240, 0.457);
+}
+
+.contlayout{
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-height: 45vh;
+}
+

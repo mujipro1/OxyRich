@@ -3,36 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     public function submit(Request $req)
-    {
-        $validatedData = $req->validate([
-            'fname' => 'required',
-            'lname' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|digits:10',
-            'password' => 'required|min:5',
-            'rpassword' => 'required|min:5',
-            'address' => 'required'
+    {      
+        $req->validate([
+            'username' => 'required',
+            'password' => 'required'
         ]);
         
-        $firstname = $validatedData['fname'];
-        $lastname = $validatedData['lname'];
-        $email = $validatedData['email'];
-        $phone = $validatedData['phone'];
-        $password = $validatedData['password'];
-        $rpassword = $validatedData['rpassword'];
-        $address = $validatedData['address'];
+        $username = $req->input('username');
+        $password = $req->input('password');
 
-        if($password != $rpassword)
+        if($password != "12345678")
         {
-            return redirect()->back()->with('fail', 'Passwords do not match');
+            return redirect()->back()->with('fail', 'Invalid Credentials');
         }
         else
         {
-            return view('login')->with('success', 'Sign up successful, Login to continue');
+            return redirect()->route('home');
         }
     }
 

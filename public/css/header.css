@@ -176,7 +176,7 @@
     }
   
     .myBtn:hover{
-      background-color: #0a0239;
+      background-color: #150378;
       color: white;
     }
 
@@ -191,8 +191,24 @@
     }
     
     .myBtn2:hover{
-      background-color: #0a0239;
-      color: rgb(233, 233, 233);
+      color: rgb(213, 213, 213);
+    }
+
+
+    .myBtn3{
+      width: 100%;
+      padding:3%;
+      height: 40px;
+      border-radius: 5px;
+      background-color: transparent;
+      color: #150378;
+      border: 2px solid #150378;
+      transition: all .2s ease-in-out;
+    }
+
+    .myBtn3:hover{
+      background-color: #150378;
+      color: rgb(255, 255, 255);
     }
 
     /* svgs */
@@ -226,3 +242,36 @@
   justify-content: center;
   text-align: center;
 }
+
+
+.alert{
+  position: absolute;
+  width: 250px;
+  left: 4%;
+  opacity: 0;
+}
+
+.alert.show{
+  opacity: 1;
+  z-index:100;
+  animation: hide 6s ease-in-out forwards;
+}
+  
+  @keyframes hide{
+    0%{
+      opacity: 0;
+      z-index:-100;
+    }
+    30%{
+      opacity: 1;
+      z-index:100;
+    }
+    70%{
+      opacity: 1;
+      z-index:100;
+    }
+    100%{
+      opacity: 0;
+      z-index:-100;
+    }
+  }
