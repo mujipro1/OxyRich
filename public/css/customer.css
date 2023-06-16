@@ -2,10 +2,15 @@ body{
     background-color: rgba(229, 237, 240, 0.457);
 }
 
-.contlayout{
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    min-height: 45vh;
-}
-
+.contlayout {
+    overflow-x: auto; /* Add horizontal scroll */
+  }
+  
+  .table-responsive {
+    overflow-y: auto; /* Add vertical scroll */
+    max-height: 300px; /* Set the maximum height of the table */
+  }
+  
+.table thead th, tr{
+    text-align: center; /* Center align the table headings */
+  }

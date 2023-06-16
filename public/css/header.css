@@ -197,7 +197,6 @@
 
     .myBtn3{
       width: 100%;
-      padding:3%;
       height: 40px;
       border-radius: 5px;
       background-color: transparent;
@@ -209,6 +208,21 @@
     .myBtn3:hover{
       background-color: #150378;
       color: rgb(255, 255, 255);
+    }
+
+    .myBtn4{
+      width: 100%;
+      height: 40px;
+      border-radius: 5px;
+      background-color: #150378;
+      color: white;
+      border: 2px solid #150378;
+      transition: all .2s ease-in-out;
+    }
+
+    .myBtn4:hover{
+      background-color: #11045b;
+      color: rgb(213, 213, 213);
     }
 
     /* svgs */
@@ -275,3 +289,11 @@
       z-index:-100;
     }
   }
+
+  .contlayout{
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-height: 55vh;
+}
+
