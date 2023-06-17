@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -21,8 +22,15 @@ class UserController extends Controller
         {
             return redirect()->back()->with('fail', 'Invalid Credentials');
         }
-        else
-        {
+        else {
+            $users = User::all();
+
+            foreach ($users as $user) {
+                echo $user->username;
+                echo $user->password;
+                echo $user->roll;
+            }
+
             return redirect()->route('home');
         }
     }

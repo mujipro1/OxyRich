@@ -1,0 +1,45 @@
+.conatiner{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.input-group{
+    height: 70px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 10px; 
+    margin-top: 10px;
+    border-radius: 30px;
+    box-shadow: 0 0 5px #ebe4e4;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    box-shadow: 0 0 5px #19248a;
+}
+
+.ver-div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.label{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn2{
+    width: 30%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #150378;
+    color: white;
+    border: 2px solid #150378;
+    transition: all .2s ease-in-out;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
