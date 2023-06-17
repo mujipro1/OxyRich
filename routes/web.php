@@ -42,7 +42,7 @@ Route::get('/customer', function () {
 }) -> name('customer');
 
 Route::get('/employee', function () {
-    return view('employee');
+    return view('employeeView');
 }) -> name('employee');
 
 Route::get('/sectors', function () {

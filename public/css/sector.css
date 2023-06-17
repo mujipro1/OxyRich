@@ -3,16 +3,23 @@ body{
     padding-top: 30px;
 }
 
-.contlayout {
+.inside-div{
+    background-color: white;
+    border: 1px solid #ccc;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 10%;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
 .myBtn2 {
     margin: 0px 0;
     width: 80%;
-    height: 20%;
+    height: 100%;
     font-size: 30px;
     font-family: 'Times New Roman', Times, serif;
     box-shadow: 0 0 5px #424b97;
