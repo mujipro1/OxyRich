@@ -35,4 +35,30 @@ class UserController extends Controller
         }
     }
 
+    public function authenticateAdmin(Request $req){
+        $req->validate([
+            'password' => 'required',
+            'caller' => 'required'
+        ]);
+
+        $password = $req->input('password');
+        $caller = $req->input('caller');
+
+        
+        if($password != "1234")
+        {
+            return redirect()->back()->with('fail', 'Invalid Password');
+        }
+        else
+        {
+            if ($caller==('C')){
+                return redirect()->route('CustomerList');
+            }
+            if ($caller==('E')){
+                return redirect()->route('home');
+            }
+        }
+
+    }
+
 }

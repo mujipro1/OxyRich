@@ -25,7 +25,8 @@ Route::get('/contact', function () {
     return view('contact');
 }) -> name('contact');
 
-Route::post('/submit-form', 'App\Http\Controllers\UserController@submit')->name('submit-form');
+Route::post('/submit-form', 'App\Http\Controllers\UserController@submit')
+->name('submit-form');
 
 Route::get('/aboutUs', function () {
     return view('aboutUs');
@@ -56,3 +57,16 @@ Route::get('/order', function () {
     return view('order');
 }) -> name('order');
 
+
+Route::get('/admin', function () {
+    return view('adminView');
+}) -> name('admin');
+
+
+Route::get('/CustomerList', function () {
+    return view('adminCustomerList');
+}) -> name('CustomerList');
+
+Route::post('/admin/auth/viewUsers', 'App\Http\Controllers\UserController@authenticateAdmin')->name('viewUsers');
+
+Route::get('/customerEdit/{customerId}', 'App\Http\Controllers\CustomerController@edit')->name('customerEdit');
