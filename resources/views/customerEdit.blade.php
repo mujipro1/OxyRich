@@ -30,13 +30,13 @@
                         <h2> Customer Details</h2>
                         <button onclick='enableEdit()' class="myBtn4 my-2">Edit</button><br>
                         <label for="name" class="form-label mx-3 mt-3">Name</label>
-                        <input disabled type="text" placeholder="Ali Khan" name='name' class="form-control">
+                        <input disabled type="text" value="Ali Khan" name='name' class="form-control">
                         <label for="email" class="form-label mx-3 mt-3">Email</label>
-                        <input disabled type="email" name='email' placeholder="alikhan@gmail.com" class="form-control">
+                        <input disabled type="email" name='email' value="alikhan@gmail.com" class="form-control">
                         <label for="phone" class="form-label mx-3 mt-3">Phone</label>
-                        <input disabled type="number" name='phone' placeholder="03123912399" class="form-control">
+                        <input disabled type="number" name='phone' value="03123912399" class="form-control">
                         <label for="address" class="form-label mx-3 mt-3">Address</label>
-                        <input disabled type="text" name='address' placeholder="St 10 G-10/4 Islamabad"
+                        <input disabled type="text" name='address' value="St 10 G-10/4 Islamabad"
                             class="form-control">
                         <div class='text-center'><button class=" myBtn mt-4">Save Changes</button>
                             <button class="myBtn2 mt-4">Cancel</button>
@@ -46,11 +46,11 @@
                     </div>
                 </div>
             </div>
-            </div>
-
-
-            <footer></footer>
         </div>
+
+
+        <footer></footer>
+    </div>
 
 </body>
 <script src="{{asset('js/header.js')}}"></script>
