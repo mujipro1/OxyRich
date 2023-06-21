@@ -22,6 +22,12 @@
     </div>
     @endif
 
+    @if(Session::get('emptyID'))
+    <div class="alert alert-danger">
+        {{Session::get('emptyID')}}
+    </div>
+    @endif
+
         <div class="container pb-5">
             <div class="row">
                 <nav class="navbar nav2 navbar-expand-lg"></nav>
@@ -33,12 +39,15 @@
             <div class="row">
                 <div class="mt-3 col-md-6">
                     <div class='p-4 contlayout'>
-                        <h2> Orders</h2>
-                        <p class="m-3 text-muted"> Find by Order ID or customer ID. </p>
-                        <input type="text" placeholder="Enter Order ID" class="form-control my-3">
-                        <div class="mx-3 text-muted"> or </div>
-                        <input type="text" placeholder="Enter Customer ID" class="form-control my-3">
-                        <button class="myBtn2">Check</button>
+                        <form action="{{route('viewOrderDetails')}}" method="post">
+                            @CSRF
+                            <h2> Orders</h2>
+                            <p class="m-3 text-muted"> Find by Order ID or customer ID. </p>
+                            <input type="text" placeholder="Enter Order ID" name='orderID' class="form-control my-3">
+                            <div class="mx-3 text-muted"> or </div>
+                            <input type="text" placeholder="Enter Customer ID" name='customerID' class="form-control my-3">
+                            <button type='submit' class="myBtn2">Check</button>
+                        </form>
                     </div>
                 </div>
                 <div class='col-md-6 mt-3'>

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// home routes
+
 Route::get('/home', function () {
     return view('home');
 }) -> name('home');
@@ -32,14 +34,27 @@ Route::get('/aboutUs', function () {
     return view('aboutUs');
 }) -> name('aboutUs');
 
+
 Route::get('/sign-up', function () {
     return view('signup');
 }) -> name('sign-up');
 
+// ----------------------------
+
+
+
+
+// customer view routes
 
 Route::get('/customer', function () {
     return view('customerView');
 }) -> name('customer');
+
+// --------------------------------------
+
+
+
+// employee view routes 
 
 Route::get('/employee', function () {
     return view('employeeView');
@@ -57,6 +72,11 @@ Route::get('/order', function () {
     return view('order');
 }) -> name('order');
 
+// ----------------------------------------
+
+
+
+// admin view routes
 
 Route::get('/admin', function () {
     return view('adminView');
@@ -69,4 +89,10 @@ Route::get('/CustomerList', function () {
 
 Route::post('/admin/auth/viewUsers', 'App\Http\Controllers\UserController@authenticateAdmin')->name('viewUsers');
 
-Route::get('/customerEdit/{customerId}', 'App\Http\Controllers\CustomerController@edit')->name('customerEdit');
+Route::get('/customerEdit/{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
+
+Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveChanges')->name('saveCustomerChanges');
+
+Route::post('/viewOrderDetails' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
+
+// -------------------------------------------
