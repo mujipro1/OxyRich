@@ -49,9 +49,14 @@ Route::get('/sectors', function () {
     return view('sectorView');
 }) -> name('sectors');
 
-Route::get('/subsectors', function () {
-    return view('subSectors');
-}) -> name('sector');
+// Route::get('/subsectors', function () {
+//     return view('subSectors');
+// }) -> name('sector');
+
+Route::get('/subsector/{sector}', function ($sector) {
+    return view('subsector', ['sector' => $sector]);
+})-> name('subsector');
+
 
 Route::get('/order', function () {
     return view('order');

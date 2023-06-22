@@ -30,6 +30,7 @@
                         <p> 0300-1234567 </p>
                         <p>alikhan@gmail.com</p>
                         <p> 123, ABC Street, XYZ Town, Lahore </p>
+                        <button class="myBtn2">Edit</button>
                     </div>
                 </div>
                 <div class='col-md-5 mt-3'>

@@ -26,13 +26,13 @@
         <div class='container'>
             <div class='row justify-content-evenly'>
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button" onclick="window.location.href='/subsectors'">
+                        <button class="myBtn2 btn btn-dark" type="button" data-sector="D">
                             Sector D
                         </button>
                 </div>
 
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button">
+                        <button class="myBtn2 btn btn-dark" type="button" data-sector="E">
                             Sector E
                         </button>
                     </div>
@@ -42,13 +42,13 @@
         <div class='container'>
             <div class='row justify-content-evenly'>
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button" onclick="window.location.href='/subsectors'">
+                        <button class="myBtn2 btn btn-dark" type="button" data-sector="F">
                             Sector F
                         </button>
                 </div>
 
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button">
+                        <button class="myBtn2 btn btn-dark" type="button" data-sector="G">
                             Sector G
                         </button>
                 </div>
@@ -58,13 +58,13 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button" onclick="window.location.href='/subsectors'">
+                        <button class="myBtn2 btn btn-dark" type="button" data-sector="H">
                             Sector H    
                         </button>
                 </div>
 
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button">
+                        <button class="myBtn2 btn btn-dark" type="button" data-sector="I">
                             Sector I
                         </button>
                 </div>
@@ -74,7 +74,7 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button" onclick="window.location.href='/subsectors'">
+                        <button class="myBtn2 btn btn-dark" type="button" >
                             BlueArea   
                         </button>
                 </div>
@@ -90,12 +90,12 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button" onclick="window.location.href='/subsectors'">
+                        <button class="myBtn2 btn btn-dark" type="button" ">
                             RawalPindi  
                         </button>
                 </div>
                 <div class='col-md-6 my-4'>
-                        <button class="myBtn2 btn btn-dark" type="button" onclick="window.location.href='/subsectors'">
+                        <button class="myBtn2 btn btn-dark" type="button" ">
                             Others  
                         </button>
                 </div>
@@ -108,6 +108,7 @@
 
 </body>
 <script src="{{asset('js/header.js')}}"></script>
+<script src="{{asset('js/subsector.js')}}"></script>
 <script>
     document.getElementById("dashboard").classList.add("active");
 </script>

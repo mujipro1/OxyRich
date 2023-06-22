@@ -26,38 +26,19 @@
             <div class='column'>
                 <div class='col-md-12 my-4'>
                     <div class='contlayout p-4'>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-11
-                        </button>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-12
-                        </button>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-13
-                        </button>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-14
-                        </button>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-15
-                        </button>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-16
-                        </button>
-                        <button class="myBtn2 btn btn-dark" type="button">
-                            Sector D-17
-                        </button>
+                        //dynamic content
                     </div>
                 </div>
             </div>
         </div>
+
 
         <footer></footer>
     </div>
 
 </body>
 <script src="{{asset('js/header.js')}}"></script>
-<!-- <script src="{{asset('js/subsector.js')}}"></script> -->
+<script src="{{asset('js/subsector.js')}}"></script>
 <script>
     document.getElementById("dashboard").classList.add("active");
 </script>
