@@ -16,6 +16,12 @@
 <body>
     <div class="c1">
 
+        @if(Session::get('success'))
+        <div class="alert alert-danger">
+            {{Session::get('success')}}
+        </div>
+        @endif
+
         <div class="container pb-5">
             <div class="row">
                 <nav class="navbar nav2 navbar-expand-lg"></nav>
@@ -25,7 +31,11 @@
 
         <div class="container side">
             <div class='row'>
-                <div class="col-md-12 my-3">
+
+                <div class="col-md-1 mt-4"><button onclick="window.location.href='/admin'" class="backBtn">
+                        < </button>
+                </div>
+                <div class="col-md-11 my-4">
                     <div class='p-4 contlayout'>
                         <h2> Customers </h2>
                         <div class="row">
@@ -72,7 +82,8 @@
                                                     <td>Ali Khan</td>
                                                     <td>0300-1234567</td>
                                                     <td>alikhan@gmail.com</td>
-                                                    <td><button onclick="redirectToEdit(1)" class="myBtn3">View</button></td>
+                                                    <td><button onclick="redirectToEdit(1)" class="myBtn3">View</button>
+                                                    </td>
                                                     <td><button class="myBtn3">Delete</button></td>
                                                 </tr>
                                                 <!-- Add more table rows here if needed -->
@@ -100,9 +111,10 @@
 <script src="{{asset('js/header.js')}}"></script>
 <script>
 document.getElementById("dashboard").classList.add("active");
-  function redirectToEdit(customerId) {
+
+function redirectToEdit(customerId) {
     window.location.href = '/customerEdit/' + customerId;
-  }
+}
 </script>
 
 </html>
