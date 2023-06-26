@@ -26,24 +26,32 @@ const sectors = [
     }
   ];
  
-// Get the sector buttons and subsectors container
-const sectorButtons = document.querySelectorAll('.myBtn2 btn btn-dark');
-const subsectorsContainer = document.querySelector('.contlayout p-4');
 
-// Event listener for sector buttons
-sectorButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const sector = button.getAttribute('data-sector');
-      const selectedSector = sectors.find((s) => s.sector === sector);
-  
-      // Clear the subsectors container
-      subsectorsContainer.innerHTML = '';
-  
-      // Create and append subsector divs
-      selectedSector.subsectors.forEach((subsector) => {
-        const subsectorDiv = document.createElement('div');
-        subsectorDiv.textContent = subsector;
-        subsectorsContainer.appendChild(subsectorDiv);
+sectorOptions = document.querySelector('#sector');
+subsectorOptions = document.querySelector('#subsector');
+
+// Populate the sector options
+sectors.forEach(function(sector) {
+  option = document.createElement('option');
+  option.text = sector.sector;
+  option.value = sector.sector;
+  sectorOptions.add(option);
+});
+
+
+// Populate the subsector options
+sectorOptions.addEventListener('change', function() {
+  subsectorOptions.innerHTML = '';
+  sectors.forEach(function(sector) {
+    if (sector.sector === sectorOptions.value) {
+      subsectorOptions.disabled = false;
+      sector.subsectors.forEach(function(subsector) {
+        option = document.createElement('option');
+        option.text = subsector;
+        option.value = subsector;
+        subsectorOptions.add(option);
       });
-    });
+    }
   });
+  document.getElementById('subLabel').classList.remove('text-muted');
+});

@@ -61,4 +61,8 @@ class UserController extends Controller
 
     }
 
+    public function deleteCustomer($customerId){
+        return redirect()->back()->with('success', 'Customer Deleted!');
+    }
+
 }

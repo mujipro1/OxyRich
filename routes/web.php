@@ -64,12 +64,11 @@ Route::get('/sectors', function () {
     return view('sectorView');
 }) -> name('sectors');
 
-Route::get('/subsectors', function () {
-    return view('subSectors');
-}) -> name('sector');
+Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
+Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
 
 Route::get('/order', function () {
-    return view('order');
+    return view('placeOrderEmp');
 }) -> name('order');
 
 // ----------------------------------------
@@ -87,12 +86,15 @@ Route::get('/CustomerList', function () {
     return view('adminCustomerList');
 }) -> name('CustomerList');
 
+Route::get('/deleteCustomer{customerId}', 'App\Http\Controllers\UserController@deleteCustomer')->name('deleteCustomer');
+
+
 Route::post('/admin/auth/viewUsers', 'App\Http\Controllers\UserController@authenticateAdmin')->name('viewUsers');
 
-Route::get('/customerEdit/{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
+Route::get('/customerEdit{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
 
 Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveChanges')->name('saveCustomerChanges');
 
-Route::post('/viewOrderDetails' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
+Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
 
 // -------------------------------------------
