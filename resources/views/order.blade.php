@@ -29,7 +29,7 @@
         <label class="label"  for="filled_bottles">Filled Bottles:</label>
         <input class="input-group" type="text" id="filled_bottles" name="filled_bottles" required>
         
-        <label class="label" for="remaining_bottles">Remaining Bottles:</label>
+        <label class="label" for="remaining_bottles">Empty Bottles:</label>
         <input class="input-group" type="text" id="remaining_bottles" name="remaining_bottles" required>
 
         <label class="label" for="balance">Balance:</label>
@@ -37,14 +37,11 @@
     </div>
 
     <div class="ver-div">
-        <label class="label" for="emptied_bottles">Emptied Bottles:</label>
-        <input class="input-group" type="text" id="emptied_bottles" name="emptied_bottles" required>
-       
         <label class="label" for="cash">Cash:</label>
         <input class="input-group" type="text" id="cash" name="cash" required>
         
-        <label class="label" for="total">Total:</label>
-        <input class="input-group" type="text" id="total" name="total" required>
+        <label class="label" for="emptied_bottles">Total Bottles</label>
+        <input class="input-group" type="text" id="emptied_bottles" name="emptied_bottles" required>
     </div>
 
         <button class="btn2" type="submit">Submit Order</button>

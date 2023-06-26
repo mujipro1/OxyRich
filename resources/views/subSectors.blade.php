@@ -26,7 +26,20 @@
             <div class='column'>
                 <div class='col-md-12 my-4'>
                     <div class='contlayout p-4'>
-                        //dynamic content
+                        <script>
+                        var sectors = ['Sector D-11', 'Sector D-12', 'Sector D-13', 'Sector D-14', 'Sector D-15', 'Sector D-16', 'Sector D-17'];
+
+                        var container = document.querySelector('.contlayout');
+
+                        for (var i = 0; i < sectors.length; i++) {
+                            var button = document.createElement('button');
+                            button.className = 'myBtn2 btn btn-dark';
+                            button.type = 'button';
+                            button.textContent = sectors[i];
+
+                            container.appendChild(button);
+                        }
+                        </script>
                     </div>
                 </div>
             </div>

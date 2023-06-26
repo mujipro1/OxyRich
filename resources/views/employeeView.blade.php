@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="mt-3 col-md-12">
                     <div class='p-4 contlayout'>
-                        <h2> John Doe </h2>
+                        <h2> Waseem Khan </h2>
                         <p> Employee ID: 123456 </p>
                         <p>john.doe@example.com</p>
                         <p> 456, XYZ Street, ABC Town, Lahore </p>
