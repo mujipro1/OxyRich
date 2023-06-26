@@ -67,6 +67,11 @@ Route::get('/sectors', function () {
 Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
 Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
 
+// Route::get('/subsector/{sector}', function ($sector) {
+//     return view('subsector', ['sector' => $sector]);
+// })-> name('subsector');
+
+
 Route::get('/order', function () {
     return view('placeOrderEmp');
 }) -> name('order');
