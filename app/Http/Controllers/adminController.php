@@ -8,7 +8,7 @@ class adminController extends Controller
 {
     public function edit($customerId)
     {
-        return view('customerEdit', ['customerId' => $customerId]);
+        return view('customerEdit', ['customerId']);
     }
 
     public function saveChanges(Request $req){
@@ -30,25 +30,15 @@ class adminController extends Controller
         return redirect()->route('CustomerList')->with('success',"Changes made successfully!");
     }
 
-    public function findOrder(Request $req){
-        $order_id = $req->input('orderID');
-        $customer_id = $req->input('customerID');
+    public function findOrder($id){
 
-        if(!($order_id || $customer_id)){
-            return redirect()->route("admin")->with('emptyID', "Please Enter Order or Customer ID!");
-        }
-
-        if ($order_id){
-            if ($order_id == "123"){
-                return redirect()->back()->with('emptyID', "Order not found!");
-            }
+        if($id == 1){
             return view("adminViewOrder");
         }
-        
-        if ($customer_id){
-            return redirect()->route("adminViewOrder");
-        }
 
+        if($id == 2){
+            return view("adminViewOrder");
+        }
       
     }
 

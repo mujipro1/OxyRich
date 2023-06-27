@@ -14,3 +14,8 @@ body{
 .table thead th, tr{
     text-align: center; /* Center align the table headings */
   }
+
+.customerDetailsOrder{
+  margin: 20px;
+  color: rgb(105, 105, 105);    
+}
