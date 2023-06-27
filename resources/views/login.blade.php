@@ -42,8 +42,8 @@
                                 <input type='name' name='username' class='form-control' required/>
                                 <label class='px-3' for='password'>Password</label>
                                 <input type='password' name='password' class='form-control' required/>
-                                <input class="form-check-input mt-2" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label mt-1" for="flexCheckDefault">Remember me</label>
+                                <input class="form-check-input mt-2" type="checkbox" name="remember" id="remember">
+                                <label class="form-check-label mt-1" for="remember">Remember me</label>
                                 <a href="#" class="text-decoration-none forgot float-end mt-1">Forgot Password?</a>
                                 <button class='btn loginBtn mt-4'>Login</button>
                                 </div>

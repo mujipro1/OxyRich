@@ -33,9 +33,9 @@ navBarCode = `
 footerCode=`
 <div class="footer_left"></div>
 <div class="footer_middle">
-<a href="#"><div class="triangle-up">
+<div class="triangle-up">
   <i class="fa fa-arrow-up" id="chevron"></i>
-</div></a>
+</div>
   <div>
     <a href="#" class="fa fa-facebook"></a>
     <a href="#" class="fa fa-twitter"></a>
@@ -49,6 +49,16 @@ footerCode=`
 <div class="footer_left"></div>
 </footer>
 `
+document.addEventListener('DOMContentLoaded', () => {
+const scrollToTopButton = document.querySelector('.triangle-up');
+  scrollToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
+
 
 nav2Code = `
 <div class="container">

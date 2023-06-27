@@ -4,36 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    public function submit(Request $req)
+        
+    public function login(Request $request)
     {      
-        $req->validate([
+        $request->validate([
             'username' => 'required',
             'password' => 'required'
         ]);
         
-        $username = $req->input('username');
-        $password = $req->input('password');
+        $credentials = $request->only('username', 'password');
+        $remember = $request->has('remember'); // Check if the "Remember Me" checkbox is selected
+        
+        $user = User::where('username', $credentials['username'])->first();
 
-        if($password != "12345678")
-        {
+        // if (Auth::attempt($credentials, $remember)) {
+        if ($user && $user->getAuthPassword() == $credentials['password']){
+            // $user = Auth::user();
+            
+            // Add your role-based redirection logic here
+            if ($user->roll === 'admin') {
+                return redirect()->route('admin');
+            } elseif ($user->roll === 'employee') {
+                return redirect()->route('employee');
+            } else {
+                return redirect()->route('customer');
+            }
+        } else {
+            // Authentication failed
             return redirect()->back()->with('fail', 'Invalid Credentials');
         }
-        else {
-            $users = User::all();
-
-            foreach ($users as $user) {
-                echo $user->username;
-                echo $user->password;
-                echo $user->roll;
-            }
-
-            return redirect()->route('home');
-        }
     }
+    
+
 
     public function authenticateAdmin(Request $req){
         $req->validate([

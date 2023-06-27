@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+
 // home routes
 
 Route::get('/home', function () {
@@ -27,7 +34,7 @@ Route::get('/contact', function () {
     return view('contact');
 }) -> name('contact');
 
-Route::post('/submit-form', 'App\Http\Controllers\UserController@submit')
+Route::post('/submit-form', 'App\Http\Controllers\UserController@login')
 ->name('submit-form');
 
 Route::get('/aboutUs', function () {
