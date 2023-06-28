@@ -17,9 +17,6 @@ class CreateUsersTable extends Migration
             $table->bigInteger('username')->primary();
             $table->string('password');
             $table->string('roll', 20)->checkIn(['admin', 'customer', 'employee']);
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
