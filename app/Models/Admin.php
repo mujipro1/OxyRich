@@ -11,4 +11,19 @@ class Admin extends Model
     protected $table = "admin";
     protected $primaryKey = "username";
     //Define relationships and customizations here
+
+    protected $fillable = [
+        'username',
+        'name',
+        'phone_no',
+        'address',
+        'email'
+    ];
+
+    public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
+    }
 }

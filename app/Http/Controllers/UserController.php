@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Admin;
+use App\Models\Employee;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +33,14 @@ class UserController extends Controller
             
             // Add your role-based redirection logic here
             if ($user->roll === 'admin') {
-                return redirect()->route('admin');
+                $admin = Admin::where('username', $credentials['username'])->first();                
+                return view('adminView', ['admin' => $admin]);
             } elseif ($user->roll === 'employee') {
-                return redirect()->route('employee');
+                $employee = Employee::where('username', $credentials['username'])->first();
+                return view('employeeView', ['employee' => $employee]);
             } else {
-                return redirect()->route('customer');
+                $customer = Customer::where('username', $credentials['username'])->first();
+                return view('customerView', ['customer' => $customer]);
             }
         } else {
             // Authentication failed

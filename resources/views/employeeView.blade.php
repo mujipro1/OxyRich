@@ -26,10 +26,9 @@
             <div class="row">
                 <div class="my-3 col-md-7">
                     <div class='p-4 contlayout'>
-                        <h2> Ali Khan </h2>
-                        <p> 0300-1234567 </p>
-                        <p>alikhan@gmail.com</p>
-                        <p> 123, ABC Street, XYZ Town, Lahore </p>
+                        <h2> {{$employee->name}} </h2>
+                        <p> {{$employee->phone_no}} </p>
+                        <p> {{$employee->address}} </p>
                     </div>
                 </div>
                 <div class='col-md-5 my-3'>

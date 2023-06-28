@@ -11,4 +11,18 @@ class Employee extends Model
     protected $table = "employee";
     protected $primaryKey = "username";
     //Define relationships and customizations here
+
+    protected $fillable = [
+        'username',
+        'name',
+        'phone_no',
+        'address',
+    ];
+
+    public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
+    }
 }
