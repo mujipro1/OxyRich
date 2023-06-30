@@ -19,9 +19,9 @@
         <div class="alert alert-success">
             {{Session::get('success')}}
         </div>
-        @endif        
+        @endif
 
-                                     
+
         <!--Deactivate  Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -76,7 +76,10 @@
                 </div>
                 <div class="col-md-10 my-4">
                     <div class='p-4 contlayout'>
-                        <h2> Customers </h2>
+                        <div class="d-flex my-3 justify-content-between align-items-center">
+                            <h2 class="d-inline">Customers</h2>
+                            <button onclick="redirectToNewCustomer()"class="myBtn5">Add New | &nbsp+ </button>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <p class="m-2 text-muted">Sort By</p>
@@ -131,22 +134,27 @@
                                                     <td class="muted">{{$customer->email}}</td>
                                                     @endif
 
-                                                    <td><button onclick= "redirectToEdit({{$customer->username}})" class="myBtn4">View</button>
+                                                    <td><button onclick="redirectToEdit({{$customer->username}})"
+                                                            class="myBtn4">View</button>
                                                     </td>
 
                                                     <!-- Button trigger modal -->
                                                     @if($customer->is_active)
-                                                    <td><button type="button" class="btn btn-danger btnWidth deactivateBtn" data-toggle="modal"
-                                                            data-target="#exampleModal" data-customerid="{{$customer->username}}">
+                                                    <td><button type="button"
+                                                            class="btn btn-danger btnWidth deactivateBtn"
+                                                            data-toggle="modal" data-target="#exampleModal"
+                                                            data-customerid="{{$customer->username}}">
                                                             Deactivate
                                                         </button></td>
                                                     @else
-                                                    <td><button type="button" class="btn btn-success btnWidth activateBtn" data-toggle="modal"
-                                                            data-target="#exampleModal2" data-customerid="{{$customer->username}}">
+                                                    <td><button type="button"
+                                                            class="btn btn-success btnWidth activateBtn"
+                                                            data-toggle="modal" data-target="#exampleModal2"
+                                                            data-customerid="{{$customer->username}}">
                                                             Activate
                                                         </button></td>
                                                     @endif
-                                               </tr>
+                                                </tr>
                                                 @endforeach
                                                 <!-- Add more table rows here if needed -->
                                             </tbody>
@@ -157,14 +165,14 @@
                         </div>
 
 
+                        </button>
                     </div>
                 </div>
             </div>
+
+
+            <footer></footer>
         </div>
-
-
-        <footer></footer>
-    </div>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -183,32 +191,33 @@ function redirectToAdmin() {
     window.location.href = "{{route('admin', ['admin' => $admin])}}";
 }
 
+function redirectToNewCustomer(){
+    window.location.href = "{{route('AddNewCustomer')}}";
+}
+
 document.querySelectorAll('.deactivateBtn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var customerId = this.getAttribute('data-customerid');
-    modal = document.querySelector('#exampleModal');
-    var deleteBtn = modal.querySelector('.deactivate-Btn');
-    console.log(deleteBtn);
-    deleteBtn.addEventListener('click', function() {
-        window.location.href = '/deactivateCustomer' + customerId;
+    btn.addEventListener('click', function() {
+        var customerId = this.getAttribute('data-customerid');
+        modal = document.querySelector('#exampleModal');
+        var deleteBtn = modal.querySelector('.deactivate-Btn');
+        console.log(deleteBtn);
+        deleteBtn.addEventListener('click', function() {
+            window.location.href = '/deactivateCustomer' + customerId;
         });
-});
+    });
 });
 
 document.querySelectorAll('.activateBtn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var customerId = this.getAttribute('data-customerid');
-    modal = document.querySelector('#exampleModal2');
-    var deleteBtn = modal.querySelector('.activate-Btn');
-    console.log(deleteBtn);
-    deleteBtn.addEventListener('click', function() {
-        window.location.href = '/activateCustomer' + customerId;
+    btn.addEventListener('click', function() {
+        var customerId = this.getAttribute('data-customerid');
+        modal = document.querySelector('#exampleModal2');
+        var deleteBtn = modal.querySelector('.activate-Btn');
+        console.log(deleteBtn);
+        deleteBtn.addEventListener('click', function() {
+            window.location.href = '/activateCustomer' + customerId;
         });
+    });
 });
-});
-
-
-
 </script>
 
 </html>

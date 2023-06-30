@@ -95,4 +95,5 @@ class adminController extends Controller
         return view('adminViewOrderDetails', ['order' => $order]);
     }
 
+
 }

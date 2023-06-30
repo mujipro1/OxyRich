@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -41,7 +40,8 @@
                                 <label for='name' class='px-3' for='name'>Name</label>
                                 <input type='name' name='username' class='form-control' required/>
                                 <label class='px-3' for='password'>Password</label>
-                                <input type='password' name='password' class='form-control' required/>
+                                <input name='password' type="password" class="form-control m-2" required>
+
                                 <input class="form-check-input mt-2" type="checkbox" name="remember" id="remember">
                                 <label class="form-check-label mt-1" for="remember">Remember me</label>
                                 <a href="#" class="text-decoration-none forgot float-end mt-1">Forgot Password?</a>

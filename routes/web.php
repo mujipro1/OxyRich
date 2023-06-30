@@ -109,4 +109,8 @@ Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveCh
 Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
 
 Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewOrderDetails')->name('orderDetails');
+
+Route::get('/AddNewCustomer', function(){
+    return view("newCustomer");
+})->name('AddNewCustomer');
 // -------------------------------------------
