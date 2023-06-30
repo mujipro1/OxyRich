@@ -22,19 +22,38 @@
         @endif        
 
                                      
-        <!-- Modal -->
+        <!--Deactivate  Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Confirm Deactivaton</h5>
                     </div>
                     <div class="modal-body">
-                        Are you sure you you want to delete Customer?
+                        Are you sure you you want to deactivate Customer?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger delete-btn">Delete</button>
+                        <button type="button" class="btn btn-danger deactivate-Btn">Deactivate</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activate Modal -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirm Activation</h5>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you you want to activate Customer?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success activate-Btn">Activate</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -52,7 +71,7 @@
         <div class="container side">
             <div class='row'>
 
-                <div class="col-md-1 mt-4"><button onclick="window.location.href='/admin'" class="backBtn">
+                <div class="col-md-1 mt-4"><button onclick="redirectToAdmin()" class="backBtn">
                         < </button>
                 </div>
                 <div class="col-md-10 my-4">
@@ -88,7 +107,7 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">ID</th>
+                                                    <th scope="col">CNIC</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Phone</th>
                                                     <th scope="col">Email</th>
@@ -97,19 +116,38 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+
+                                                @foreach($customers as $customer)
                                                 <tr>
-                                                    <td>23</td>
-                                                    <td>Ali Khan</td>
-                                                    <td>0300-1234567</td>
-                                                    <td>alikhan@gmail.com</td>
-                                                    <td><button onclick="redirectToEdit(1)" class="myBtn3">View</button>
+                                                    @if($customer->is_active)
+                                                    <td>{{$customer->username}}</td>
+                                                    <td>{{$customer->name}}</td>
+                                                    <td>{{$customer->phone_no}}</td>
+                                                    <td>{{$customer->email}}</td>
+                                                    @else
+                                                    <td class="muted">{{$customer->username}}</td>
+                                                    <td class="muted">{{$customer->name}}</td>
+                                                    <td class="muted">{{$customer->phone_no}}</td>
+                                                    <td class="muted">{{$customer->email}}</td>
+                                                    @endif
+
+                                                    <td><button onclick= "redirectToEdit({{$customer->username}})" class="myBtn4">View</button>
                                                     </td>
+
                                                     <!-- Button trigger modal -->
-                                                    <td><button type="button" class="myBtn3 delBtn" data-toggle="modal"
-                                                            data-target="#exampleModal" data-customerid="2">
-                                                            Delete
+                                                    @if($customer->is_active)
+                                                    <td><button type="button" class="btn btn-danger btnWidth deactivateBtn" data-toggle="modal"
+                                                            data-target="#exampleModal" data-customerid="{{$customer->username}}">
+                                                            Deactivate
                                                         </button></td>
+                                                    @else
+                                                    <td><button type="button" class="btn btn-success btnWidth activateBtn" data-toggle="modal"
+                                                            data-target="#exampleModal2" data-customerid="{{$customer->username}}">
+                                                            Activate
+                                                        </button></td>
+                                                    @endif
                                                </tr>
+                                                @endforeach
                                                 <!-- Add more table rows here if needed -->
                                             </tbody>
                                         </table>
@@ -140,14 +178,31 @@ function redirectToEdit(customerId) {
     window.location.href = '/customerEdit' + customerId;
 }
 
-document.querySelectorAll('.delBtn').forEach(function(btn) {
+function redirectToAdmin() {
+    // redirect to route
+    window.location.href = "{{route('admin', ['admin' => $admin])}}";
+}
+
+document.querySelectorAll('.deactivateBtn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     var customerId = this.getAttribute('data-customerid');
     modal = document.querySelector('#exampleModal');
-    var deleteBtn = modal.querySelector('.delete-btn');
+    var deleteBtn = modal.querySelector('.deactivate-Btn');
     console.log(deleteBtn);
     deleteBtn.addEventListener('click', function() {
-        window.location.href = '/deleteCustomer' + customerId;
+        window.location.href = '/deactivateCustomer' + customerId;
+        });
+});
+});
+
+document.querySelectorAll('.activateBtn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var customerId = this.getAttribute('data-customerid');
+    modal = document.querySelector('#exampleModal2');
+    var deleteBtn = modal.querySelector('.activate-Btn');
+    console.log(deleteBtn);
+    deleteBtn.addEventListener('click', function() {
+        window.location.href = '/activateCustomer' + customerId;
         });
 });
 });

@@ -53,5 +53,5 @@ sectorOptions.addEventListener('change', function() {
       });
     }
   });
-  document.getElementById('subLabel').classList.remove('text-muted');
+  document.getElementById('subLabel').classList.remove('muted');
 });

@@ -16,6 +16,7 @@ class CreateEmployeeTable extends Migration
         Schema::create('employee', function (Blueprint $table) {
             $table->bigInteger('username')->primary();
             $table->string('name', 100);
+            $table->string('email', 100)->unique();
             $table->text('address', 200);
             $table->string('phone_no', 12)->unique();
             $table->foreign('username')->references('username')->on('users');

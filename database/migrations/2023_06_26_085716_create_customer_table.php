@@ -19,6 +19,8 @@ class CreateCustomerTable extends Migration
             $table->text('address', 200);
             $table->string('email', 100)->unique();
             $table->string('sector', 100);
+            $table->string('subsector', 100);
+            $table->boolean('is_active')->default(true);
             $table->string('phone_no', 12)->unique();
             $table->decimal('bottle_price', 10, 2);
             $table->integer('no_of_bottles');

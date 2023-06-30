@@ -73,6 +73,8 @@ Route::get('/sectors', function () {
 
 Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
 Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
+Route::get('/submitSector{sector}_{subsector}', 'App\Http\Controllers\employeeController@returnToSector')->name('returnToSector');
+Route::post('/submitOrder', 'App\Http\Controllers\employeeController@submitOrder')->name('submitOrder');
 
 // Route::get('/subsector/{sector}', function ($sector) {
 //     return view('subsector', ['sector' => $sector]);
@@ -89,19 +91,16 @@ Route::get('/order', function () {
 
 // admin view routes
 
-Route::get('/admin', function () {
-    return view('adminView');
-}) -> name('admin');
+Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
 
 
-Route::get('/CustomerList', function () {
-    return view('adminCustomerList');
-}) -> name('CustomerList');
+Route::get('/CustomerList', 'App\Http\Controllers\adminController@viewCustomerList')->name('CustomerList');
 
-Route::get('/deleteCustomer{customerId}', 'App\Http\Controllers\UserController@deleteCustomer')->name('deleteCustomer');
+Route::get('/deactivateCustomer{customerId}', 'App\Http\Controllers\adminController@deactivateCustomer')->name('deactivateCustomer');
+Route::get('/activateCustomer{customerId}', 'App\Http\Controllers\adminController@activateCustomer')->name('activateCustomer');
 
 
-Route::post('/admin/auth/viewUsers', 'App\Http\Controllers\UserController@authenticateAdmin')->name('viewUsers');
+Route::post('/adminAuth', 'App\Http\Controllers\UserController@authenticateAdmin')->name('adminAuth');
 
 Route::get('/customerEdit{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
 
@@ -109,4 +108,5 @@ Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveCh
 
 Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
 
+Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewOrderDetails')->name('orderDetails');
 // -------------------------------------------

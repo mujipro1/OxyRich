@@ -25,7 +25,7 @@
         <div class="container side">
             <div class='row'>
 
-                <div class="col-md-1 mt-4"><button onclick="window.location.href='/admin'" class="backBtn">
+                <div class="col-md-1 mt-4"><button onclick="redirectToAdmin()" class="backBtn">
                         < </button>
                 </div>
                 <div class="col-md-10 my-4">
@@ -61,27 +61,21 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Date/Time</th>
                                                     <th scope="col">Customer ID</th>
                                                     <th scope="col">Customer Name</th>
-                                                    <th scope="col">View</th>
-                                                    <th scope="col">Delete</th>
+                                                    <th scope="col">Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>23</td>
-                                                    <td>Ali Khan</td>
-                                                    <td>0300-1234567</td>
-                                                    <td>alikhan@gmail.com</td>
-                                                    <td><button onclick="redirectToEdit(1)" class="myBtn3">View</button>
-                                                    </td>
-                                                    <!-- Button trigger modal -->
-                                                    <td><button type="button" class="myBtn3 delBtn" data-toggle="modal"
-                                                            data-target="#exampleModal" data-customerid="2">
-                                                            Delete
-                                                        </button></td>
+                                                @foreach($orders as $order)
+                                                <tr onclick="redirectToOrderDetails({{$order->order_no}})">
+                                                    <td>{{$order->order_date}}</td>
+                                                    <td>{{$order->username}}</td>
+                                                    <td>{{$order->customer->name}}</td>
+                                                    <td>{{$order->total_amount}}</td>
                                                </tr>
+                                                @endforeach
                                                 <!-- Add more table rows here if needed -->
                                             </tbody>
                                         </table>
@@ -107,6 +101,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.getElementById("dashboard").classList.add("active");
+function redirectToAdmin() {
+    // redirect to route
+    window.location.href = "{{route('admin', ['admin' => $admin])}}";
+}
+
+function redirectToOrderDetails(orderId) {
+    // redirect to route
+    window.location.href = "{{ url('/orderDetails') }}" + orderId;
+}
 </script>
 
 </html>

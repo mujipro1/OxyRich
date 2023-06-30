@@ -26,20 +26,22 @@
             <div class="row">
                 <div class="col-md-1 m-4"><button onclick="window.location.href='/CustomerList'" 
                 class="backBtn"><</button></div>
-                <div class="mt-3 ml-3 col-md-8">
+                <div class="my-3 ml-3 col-md-8">
                         <div class='p-4 mx-3 contlayout'>
                         <form action="{{route('saveCustomerChanges')}}" method="post">
                             @CSRF
                             <h2> Customer Details</h2>
                             <button onclick='enableEdit()' class="myBtn4 my-2">Edit</button><br>
+                            <input type="hidden" name="username" value="{{$customer->username}}">
+                            <label for="username" class="form-label mx-3 mt-3">CNIC : {{$customer->username}}</label><br>
                             <label for="name" class="form-label mx-3 mt-3">Name</label>
-                            <input disabled type="text" value="Ali Khan" name='name' class="form-control" required>
+                            <input disabled type="text" value="{{$customer->name}}" name='name' class="form-control" required>
                             <label for="email" class="form-label mx-3 mt-3">Email</label>
-                            <input disabled type="email" name='email' value="alikhan@gmail.com" class="form-control" required>
+                            <input disabled type="email" name='email' value="{{$customer->email}}" class="form-control" required>
                             <label for="phone" class="form-label mx-3 mt-3">Phone</label>
-                            <input disabled type="number" name='phone' value="03123912399" class="form-control" required>
+                            <input disabled type="number" name='phone' value="{{$customer->phone_no}}" class="form-control" required>
                             <label for="address" class="form-label mx-3 mt-3">Address</label>
-                            <input disabled type="text" name='address' value="St 10 G-10/4 Islamabad"
+                            <input disabled type="text" name='address' value="{{$customer->address}}"
                                 class="form-control" required>
                         <div class='text-center'><button type="submit" id="saveBtn" class="myBtn mt-4" disabled>Save</button></div>
                         </form>

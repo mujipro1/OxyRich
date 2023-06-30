@@ -49,14 +49,14 @@
                         </div>
                     
                         <div class="label-select-container">
-                            <label for="subsector" id="subLabel" class="text-muted form-label">Choose Subsector</label>
+                            <label for="subsector" id="subLabel" class="muted form-label">Choose Subsector</label>
                             <select disabled name="subsector" id="subsector" class="form-control my-3">
                             <option value="Select Subsector" disabled selected>Select Subsector</option>
                             </select>
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            <button type='submit' id="submitBtn" class="myBtn mt-4">Next</button>
+                            <button type='submit' id="submitBtn" class="myBtn2 mt-4">Next</button>
                         </div>
 
                         </form>

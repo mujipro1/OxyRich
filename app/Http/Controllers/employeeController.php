@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Customer;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 
 class employeeController extends Controller
@@ -15,11 +16,34 @@ class employeeController extends Controller
             return redirect()->back()->with('fail', 'Please select a sector and subsector');
         }
         else{
-            return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector]);
+            $customers = Customer::where('sector', $sector)->where('subsector', $subsector)->get();
+            return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers]);
         }
     }
 
     public function placeOrder($customerId){
-        return view('placeOrderEmp');
+        $customer = Customer::where('username', $customerId)->first();
+        $lastOrder = Orders::orderBy('order_no', 'desc')->first();
+        $lastOrderId = ($lastOrder->order_no)+1;
+        return view('placeOrderEmp', ['customer' => $customer, 'OrderId' => $lastOrderId]);
+    }
+
+    public function submitOrder(Request $request){
+        // get the form data 
+        $order_no = $request->input('order_no');
+        $customer_id = $request->input('customer_id');
+        $filled_bottles = $request->input('filled_bottles');
+        $remaining_bottles = $request->input('remaining_bottles');
+        $emptied_bottles = $request->input('emptied_bottles');
+        $balance = $request->input('balance');
+        $cash = $request->input('cash');
+        $total = $request->input('total');
+
+        
+    }
+
+    public function returnToSector($sector, $subsector){
+        $customers = Customer::where('sector', $sector)->where('subsector', $subsector)->get();
+        return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers]);
     }
 }

@@ -30,18 +30,27 @@ class UserController extends Controller
         // if (Auth::attempt($credentials, $remember)) {
         if ($user && $user->getAuthPassword() == $credentials['password']){
             // $user = Auth::user();
-            
+            Session::put('user', $user);
+           
             // Add your role-based redirection logic here
             if ($user->roll === 'admin') {
                 $admin = Admin::where('username', $credentials['username'])->first();                
-                return view('adminView', ['admin' => $admin]);
+                Session::put('admin', $admin);
+                // call a route and pass it the admin object
+                return redirect()->route('admin', ['admin' => $admin]);
+
+                
+                // return view('adminView', ['admin' => $admin]);
             } elseif ($user->roll === 'employee') {
                 $employee = Employee::where('username', $credentials['username'])->first();
+                Session::put('employee', $employee);
                 return view('employeeView', ['employee' => $employee]);
             } else {
                 $customer = Customer::where('username', $credentials['username'])->first();
+                Session::put('customer', $customer);
                 return view('customerView', ['customer' => $customer]);
             }
+
         } else {
             // Authentication failed
             return redirect()->back()->with('fail', 'Invalid Credentials');
@@ -59,25 +68,23 @@ class UserController extends Controller
         $password = $req->input('password');
         $caller = $req->input('caller');
 
-        
-        if($password != "1234")
-        {
-            return redirect()->back()->with('fail', 'Invalid Password');
+        // admin password
+        $admin = Session::get('admin');
+        $user = Session::get('user');
+        $adminPassword = $user->password;
+
+        if($password != $adminPassword){
+            return redirect()->route('admin', ['admin' => $admin])->with('fail', 'Invalid Password!');
         }
-        else
-        {
+
+        else {
             if ($caller==('C')){
                 return redirect()->route('CustomerList');
             }
             if ($caller==('E')){
-                return redirect()->route('home');
+                return redirect()->route('EmployeeList');
             }
         }
-
-    }
-
-    public function deleteCustomer($customerId){
-        return redirect()->back()->with('success', 'Customer Deleted!');
     }
 
 }

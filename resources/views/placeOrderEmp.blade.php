@@ -27,49 +27,53 @@
     <div class="container">
             <div class="row">
 
-                <div class="col-md-1 offset-md-1 pl-5 mt-4"><button onclick="window.location.href='/placeOrder'"
+                <div class="col-md-1 offset-md-1 pl-5 mt-4"><button onclick="redirectBack()"
                         class="backBtn">
                         < </button>
                 </div>
                 <div class="my-4 col-md-8">
                     <div class="contlayout p-4">
-                        <form method="post">
+                        <form action='submitOrder' method="post">
                             @CSRF
                         <h2 class='my-2'>Order Details</h2>
 
                         <div class='customerDetailsOrder'>
-                        <div> Order ID : 12121231 </div>
-                        <div> Customer ID : 12121231 </div>
-                        <div> Customer Name : Ali Khan </div>
+                        <div> Order ID : {{$OrderId}} </div>
+                        <div> Customer ID : {{$customer->username}} </div>
+                        <div> Customer Name : {{$customer->name}} </div>
                         </div>
+
+                        <input type="hidden" name="order_no" value="{{$OrderId}}">
+                        <input type="hidden" name="customer_id" value="{{$customer->username}}">
+
                         <div class="label-select-container">
                             <label for="filled_bottles" class="form-label">Filled Bottles</label>
-                            <input type="number" name="filled_bottles" id="filled_bottles" class="form-control my-3">
+                            <input required type="number" name="filled_bottles" id="filled_bottles" class="form-control my-3">
                         </div>
                     
                         <div class="label-select-container">
                             <label for="remaining_bottles" class="form-label">Remaining Bottles</label>
-                            <input type="number" name="remaining_bottles" id="remaining_bottles" class="form-control my-3">
+                            <input required type="number" name="remaining_bottles" id="remaining_bottles" class="form-control my-3">
                         </div>
                         
                         <div class="label-select-container">
                             <label for="emptied_bottles" class="form-label">Emptied Bottles</label>
-                            <input type="number" name="emptied_bottles" id="emptied_bottles" class="form-control my-3">
+                            <input required type="number" name="emptied_bottles" id="emptied_bottles" class="form-control my-3">
                         </div>
 
                         <div class="label-select-container">
                             <label for="balance" class="form-label">Balance</label>
-                            <input type="number" name="balance" id="balance" class="form-control my-3">
+                            <input required type="number" name="balance" id="balance" class="form-control my-3">
                         </div>
 
                         <div class="label-select-container">
                             <label for="cash" class="form-label">Cash</label>
-                            <input type="number" name="cash" id="cash" class="form-control my-3">
+                            <input required type="number" name="cash" id="cash" class="form-control my-3">
                         </div>
 
                         <div class="label-select-container">
                             <label for="total" class="form-label">Total</label>
-                            <input type="number" name="total" id="total" class="form-control my-3">
+                            <input required type="number" name="total" id="total" class="form-control my-3">
                         </div>
                         
                         <div class="d-flex justify-content-center">
@@ -93,6 +97,10 @@
 <script src="{{asset('js/header.js')}}"></script>
 <script>
 document.getElementById("dashboard").classList.add("active");
+
+function redirectBack() {
+window.location.href='/submitSector' + '{{$customer->sector}}' + '_'+'{{$customer->subsector}}';
+}
 </script>
 
 </html>

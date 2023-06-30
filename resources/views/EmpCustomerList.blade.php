@@ -51,21 +51,25 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Sr.</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Address</th>
-                                                    <th scope="col">Add Order</th>
+                                                    <th scope="col">New Order</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+
+                                                @foreach($customers as $customer)
+                                                @if($customer->is_active)
                                                 <tr>
-                                                    <td>23</td>
-                                                    <td>Ali Khan</td>
-                                                    <td>St 10, Model Village</td>
-                                                    <td><button onclick="redirectToOrder(1)" class="myBtn3">Add Order</button>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$customer->name}}</td>
+                                                    <td>{{$customer->address}}</td>
+                                                    <td><button onclick="redirectToOrder({{$customer->username}})" class="myBtn4">Order</button>
                                                     </td>
-                                                   
                                                 </tr>
+                                                @endif
+                                                @endforeach
                                                 <!-- Add more table rows here if needed -->
                                             </tbody>
                                         </table>

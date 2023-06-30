@@ -46,13 +46,13 @@
                 </div>
                 <div class='col-md-6 mt-3'>
                     <div class='p-4 contlayout'>
-                        <form action="{{route('viewUsers')}}" method='post'>
+                        <form action="{{route('adminAuth')}}" method='post'>
                             @CSRF
                             <h2> Users </h2>
                             <p class="m-3 text-muted"> Password is required for accessing this information </p>
-                            <input name='password' type="text" placeholder="Enter Password" class="form-control m-2" required>
+                            <input name='password' type="password" placeholder="Enter Password" class="form-control m-2" required>
                             <input hidden value='' name='caller' id='caller' class="form-control">
-                            <button onclick="setCaller('C')" type='submitsd' class="myBtn3 m-2">View Customers</button>
+                            <button onclick="setCaller('C')" type='submit' class="myBtn3 m-2">View Customers</button>
                             <button onclick="setCaller('E')"  class="myBtn4 m-2">View Employees</button>
                             <p class="m-3 text-muted"> Admin has the right to add, edit and delete users. </p>
                         </form>
