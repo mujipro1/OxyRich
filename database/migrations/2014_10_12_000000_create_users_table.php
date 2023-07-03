@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('roll', 20)->checkIn(['admin', 'customer', 'employee']);
             $table->timestamps();
         });
-    }
+    }   
 
     /**
      * Reverse the migrations.
