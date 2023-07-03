@@ -90,6 +90,7 @@ input {
 .loginBtn{
     background-color: #150378;
     width: 100%;
+    border: #150378;
     margin: 10px;
     color: white;
 }

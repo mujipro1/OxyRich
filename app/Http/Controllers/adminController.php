@@ -95,5 +95,83 @@ class adminController extends Controller
         return view('adminViewOrderDetails', ['order' => $order]);
     }
 
+    public function submitNewCustomer(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:customer',
+            'phone' => 'required',
+            'sector' => 'required',
+            'subsector' => 'required',
+            'address' => 'required',
+            'password' => 'required',
+            'confirmPassword' => 'required',
+            'bottletype' => 'required',
+            'price' => 'required',
+            'security' => 'required',
+            'noofbottles' => 'required',
+            'dispenser' => 'required'
+        ]);
+
+        $name = $request->input('name');
+        $username = $request->input('username');
+        $phone = $request->input('phone');
+        $email = $request->input('email');
+        $sector = $request->input('sector');
+        $subsector = $request->input('subsector');
+        $address = $request->input('address');
+        $password = $request->input('password');
+        $confirmPassword = $request->input('confirmPassword');
+        $bottletype = $request->input('bottletype');
+        $bottle_price = $request->input('price');
+        $security = $request->input('security');
+        $noofbottles = $request->input('noofbottles');
+        $dispenser = $request->input('dispenser');
+        $dispenserSec = $request->input('securityD');
+        $noofDispensers = $request->input('noofDispensers');
+
+        $username = str_replace('-', '', $username);
+
+        if($password != $confirmPassword){
+            return redirect()->back()->with('error', 'Passwords do not match!');
+        }
+        if (strlen($password) < 8) {
+            return redirect()->back()->with('error', 'Password must be atleast 8 characters long!');
+        }
+
+        $user = new User;
+        $user->username = $username;
+        $user->password = $password;
+        $user->roll = 'customer';
+        $user->save();
+
+        $customer = new Customer;
+        $customer->name = $name;
+        $customer->username = $username;
+        $customer->phone_no = $phone;
+        $customer->email = $email;
+        $customer->sector = $sector;
+        $customer->subsector = $subsector;
+        $customer->address = $address;
+        $customer->bottle_type = $bottletype;
+        $customer->bottle_price = $bottle_price;
+        $customer->no_of_bottles = $noofbottles;
+        $customer->per_bottle_security = $security;
+        
+        if($dispenser == 'yes'){
+            $customer->dispenser = true;
+            $customer->per_dispenser_security = $dispenserSec;
+            $customer->no_of_dispenser = $noofDispensers;
+        } else {
+            $customer->dispenser = false;
+            $customer->per_dispenser_security = 0;
+            $customer->no_of_dispenser = 0;
+        }
+
+        $customer->is_active = true;
+        $customer->save();
+
+
+        return redirect()->route('CustomerList')->with('success', 'New Customer Added!');
+    }
 
 }

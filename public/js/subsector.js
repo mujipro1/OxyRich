@@ -55,3 +55,11 @@ sectorOptions.addEventListener('change', function() {
   });
   document.getElementById('subLabel').classList.remove('muted');
 });
+
+if(sectorOptions.classList.contains("specialSector")){
+  document.getElementById('editBtn').addEventListener('click', function(){
+    sector = document.querySelector('.specialSector').value;  
+    subsector = document.querySelector('.specialSubsector').value;
+    
+  });
+}

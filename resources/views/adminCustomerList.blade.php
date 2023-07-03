@@ -78,7 +78,7 @@
                     <div class='p-4 contlayout'>
                         <div class="d-flex my-3 justify-content-between align-items-center">
                             <h2 class="d-inline">Customers</h2>
-                            <button onclick="redirectToNewCustomer()"class="myBtn5">Add New | &nbsp+ </button>
+                            <button onclick="redirectToNewCustomer()" class="myBtn5">Add New | &nbsp+ </button>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -113,7 +113,8 @@
                                                     <th scope="col">CNIC</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Phone</th>
-                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Sector</th>
+                                                    <th scope="col">Subsector</th>
                                                     <th scope="col">View/Edit</th>
                                                     <th scope="col">Delete</th>
                                                 </tr>
@@ -126,12 +127,14 @@
                                                     <td>{{$customer->username}}</td>
                                                     <td>{{$customer->name}}</td>
                                                     <td>{{$customer->phone_no}}</td>
-                                                    <td>{{$customer->email}}</td>
+                                                    <td>{{$customer->sector}}</td>
+                                                    <td>{{$customer->subsector}}</td>
                                                     @else
                                                     <td class="muted">{{$customer->username}}</td>
                                                     <td class="muted">{{$customer->name}}</td>
                                                     <td class="muted">{{$customer->phone_no}}</td>
-                                                    <td class="muted">{{$customer->email}}</td>
+                                                    <td class="muted">{{$customer->sector}}</td>
+                                                    <td class="muted">{{$customer->subsector}}</td>
                                                     @endif
 
                                                     <td><button onclick="redirectToEdit({{$customer->username}})"
@@ -169,10 +172,11 @@
                     </div>
                 </div>
             </div>
-
-
-            <footer></footer>
         </div>
+
+
+        <footer></footer>
+    </div>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -191,7 +195,7 @@ function redirectToAdmin() {
     window.location.href = "{{route('admin', ['admin' => $admin])}}";
 }
 
-function redirectToNewCustomer(){
+function redirectToNewCustomer() {
     window.location.href = "{{route('AddNewCustomer')}}";
 }
 

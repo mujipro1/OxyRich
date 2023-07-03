@@ -23,9 +23,11 @@ class CreateCustomerTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('phone_no', 12)->unique();
             $table->decimal('bottle_price', 10, 2);
+            $table->string('bottle_type', 100)->default('19L');
             $table->integer('no_of_bottles');
             $table->decimal('per_bottle_security', 10, 2);
             $table->decimal('total_bottle_security', 10, 2)->storedAs('no_of_bottles * per_bottle_security');
+            $table->boolean('dispenser')->default(false);
             $table->integer('no_of_dispenser');
             $table->decimal('per_dispenser_security', 10, 2);
             $table->decimal('total_dispenser_security', 10, 2)->storedAs('no_of_dispenser * per_dispenser_security');

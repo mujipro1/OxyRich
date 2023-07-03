@@ -113,4 +113,6 @@ Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewO
 Route::get('/AddNewCustomer', function(){
     return view("newCustomer");
 })->name('AddNewCustomer');
+
+Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
 // -------------------------------------------
