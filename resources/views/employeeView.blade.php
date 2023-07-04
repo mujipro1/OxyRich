@@ -24,6 +24,15 @@
 
         <div class="container">
             <div class="row">
+                <div class='col-md-5 my-3'>
+                    <div class='p-4 contlayout'>
+                        <h2> Place Order </h2>
+                        <button class="myBtn3 m-2 my-4" type="button" onclick="window.location.href='/sectors'">
+                            Place Order </button>
+                        <button class="myBtn3 m-2 my-4" type="button" onclick='redirectToBottleDetails()'>
+                            Bottle Details </button>
+                    </div>
+                </div>
                 <div class="my-3 col-md-7">
                     <div class='p-4 contlayout'>
                         <h2> {{$employee->name}} </h2>
@@ -31,17 +40,10 @@
                         <p> {{$employee->address}} </p>
                     </div>
                 </div>
-                <div class='col-md-5 my-3'>
-                    <div class='p-4 contlayout'>
-                        <h2> Place Order </h2>
-                        <button class="myBtn3 m-2 my-4" type="button" onclick="window.location.href='/sectors'">
-                            Place Order </button>
-                    </div>
-                </div>
             </div>
         </div>
-    
-    <footer></footer>
+
+        <footer></footer>
     </div>
 
 </body>
@@ -49,6 +51,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.getElementById("dashboard").classList.add("active");
+
+function redirectToBottleDetails() {
+    window.location.href = '/bottleDetails{{$employee->username}}';
+}
 </script>
 
 </html>

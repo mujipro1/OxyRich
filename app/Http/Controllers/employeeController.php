@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Orders;
+use App\Models\Employee;
+use Session;
 use Illuminate\Http\Request;
 
 class employeeController extends Controller
@@ -45,5 +47,20 @@ class employeeController extends Controller
     public function returnToSector($sector, $subsector){
         $customers = Customer::where('sector', $sector)->where('subsector', $subsector)->get();
         return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers]);
+    }
+
+    public function viewEmployee($employee){
+        $employee = Employee::where('username', $employee)->first();
+        return view('employeeView', ['employee' => $employee]);
+    }
+
+    public function sectors(){
+        $employee = Session::get('employee');
+        return view('sectorView', ['employee' => $employee]);
+    }
+
+    public function bottleDetails($employee){
+        $employee = Employee::where('username', $employee)->first();
+        return view('bottleDetails', ['employee' => $employee]);
     }
 }

@@ -41,6 +41,9 @@ Route::get('/aboutUs', function () {
     return view('aboutUs');
 }) -> name('aboutUs');
 
+Route::get('/access-denied', function () {
+    return view('access-denied');
+}) -> name('access-denied');
 
 Route::get('/sign-up', function () {
     return view('signup');
@@ -49,7 +52,7 @@ Route::get('/sign-up', function () {
 // ----------------------------
 
 
-
+Route::middleware('checksession')->group(function () {
 
 // customer view routes
 
@@ -63,19 +66,17 @@ Route::get('/customer', function () {
 
 // employee view routes 
 
-Route::get('/employee', function () {
-    return view('employeeView');
-}) -> name('employee');
 
-Route::get('/sectors', function () {
-    return view('sectorView');
-}) -> name('sectors');
+Route::get('/employee{employee}', 'App\Http\Controllers\employeeController@viewEmployee')->name('employee');
+
 
 Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
 Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
+Route::get('/sectors', 'App\Http\Controllers\employeeController@sectors')->name('sectors');
 Route::get('/submitSector{sector}_{subsector}', 'App\Http\Controllers\employeeController@returnToSector')->name('returnToSector');
 Route::post('/submitOrder', 'App\Http\Controllers\employeeController@submitOrder')->name('submitOrder');
 
+Route::get('/bottleDetails{employee}', 'App\Http\Controllers\employeeController@bottleDetails')->name('bottleDetails');
 // Route::get('/subsector/{sector}', function ($sector) {
 //     return view('subsector', ['sector' => $sector]);
 // })-> name('subsector');
@@ -85,11 +86,13 @@ Route::get('/order', function () {
     return view('placeOrderEmp');
 }) -> name('order');
 
+
 // ----------------------------------------
 
 
 
 // admin view routes
+
 
 Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
 
@@ -116,3 +119,4 @@ Route::get('/AddNewCustomer', function(){
 
 Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
 // -------------------------------------------
+});

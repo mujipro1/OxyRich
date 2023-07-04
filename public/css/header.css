@@ -78,15 +78,15 @@
   
   /* Footer */
   .fa:not(#chevron) {
-      padding: 10px;
       font-size: 16px;
       width: 35px;
       height: 35px;
       text-align: center;
       text-decoration: none;
       border-radius: 100%;
-      margin-top: 30px;
-      margin-left: 15px;
+      margin: 10px;
+      margin-top: 20px;
+      padding: 10px;
     }
     footer {
       display: flex;
@@ -125,6 +125,24 @@
       background-color: #dd4b39;
       color: #fff;
     }
+
+    #instagram {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    #instagram:hover {
+      background: yellow;
+      #Capa_1{
+        fill: black;
+      }
+    }
+    
+    #Capa_1{
+      fill: white;
+      width: 20px;
+      height: 20px;
+    }
+
     .fa-linkedin {
       background: #007bb5;
       color: #fff;
@@ -163,6 +181,7 @@
       height: 30vh;
     }
  
+    /* Footer ends */
 
     .myBtn{
       width: 30%;
@@ -365,4 +384,21 @@ tr:hover{
 
 .constant-width{
   width:100px;
+}
+
+.brokeLink{
+  width: 100px;
+  height: 100px;
+}
+
+.accessDeny{
+  margin-top: 200px;
+}
+
+.accessbuttons button{
+  width: 150px;
+}
+
+.accessbuttons{
+  margin-bottom: 200px;
 }
