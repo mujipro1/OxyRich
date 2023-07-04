@@ -152,3 +152,26 @@ document.addEventListener('DOMContentLoaded', function() {
       }, duration);
   }
 });
+
+
+
+// input validation
+
+const numberInputs = document.querySelectorAll('input[type="number"]');
+// change type to text to prevent number input from showing arrows
+numberInputs.forEach((input) => {
+  input.type = 'text';
+});
+
+numberInputs.forEach((input) => {
+  input.addEventListener('keyup', () => {
+        const value = parseFloat(input.value);
+
+        // Check if the value is negative
+        if (value < 0) {
+            input.value = value * -1;
+            // You can also show an error message here
+            // Example: document.getElementById('error-message').textContent = 'Negative numbers are not allowed';
+        }
+    });
+});

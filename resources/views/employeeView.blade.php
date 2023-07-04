@@ -16,6 +16,12 @@
 <body>
     <div class="c1">
 
+    @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{Session::get('success')}}
+        </div>
+    @endif
+
         <div class="container pb-5">
             <div class="row">
                 <nav class="navbar nav2 navbar-expand-lg"></nav>
@@ -24,20 +30,27 @@
 
         <div class="container">
             <div class="row">
-                <div class='col-md-5 my-3'>
-                    <div class='p-4 contlayout'>
-                        <h2> Place Order </h2>
-                        <button class="myBtn3 m-2 my-4" type="button" onclick="window.location.href='/sectors'">
-                            Place Order </button>
-                        <button class="myBtn3 m-2 my-4" type="button" onclick='redirectToBottleDetails()'>
-                            Bottle Details </button>
+                <div class="my-3 col-md-12">
+                    <div class='p-4 contlayout' style='min-height:16vh;'>
+                        <h2 class='px-3'> {{$employee->name}} </h2>
+                        <div class='px-4'> {{$employee->phone_no}} </div>
+                        <div class='px-4'> {{$employee->address}} </div>
                     </div>
                 </div>
-                <div class="my-3 col-md-7">
-                    <div class='p-4 contlayout'>
-                        <h2> {{$employee->name}} </h2>
-                        <p> {{$employee->phone_no}} </p>
-                        <p> {{$employee->address}} </p>
+            </div>
+            <div class="row">
+                <div class='col-md-6 my-3'>
+                    <div class='p-4 contlayout' style='min-height:16vh;'>
+                        <h2> Place Order </h2>
+                        <button class="myBtn4 m-2 my-4" type="button" onclick="window.location.href='/sectors'">
+                            Place Order </button>
+                    </div>
+                </div>
+                <div class='col-md-6 my-3'>
+                    <div class="p-4 contlayout" style='min-height:16vh;'>
+                        <h2 > Bottle Details </h2>
+                        <button class="myBtn4 m-2 my-4" type="button" onclick='redirectToBottleDetails()'>
+                            Bottle Details </button>
                     </div>
                 </div>
             </div>

@@ -34,14 +34,33 @@ class employeeController extends Controller
         // get the form data 
         $order_no = $request->input('order_no');
         $customer_id = $request->input('customer_id');
+        $bottletype = $request->input('bottletype');
+        $empty_bottles = $request->input('empty_bottles');
         $filled_bottles = $request->input('filled_bottles');
-        $remaining_bottles = $request->input('remaining_bottles');
-        $emptied_bottles = $request->input('emptied_bottles');
-        $balance = $request->input('balance');
-        $cash = $request->input('cash');
-        $total = $request->input('total');
-
+        $active_bottles = $request->input('active_bottles');
         
+        $bill = $request->input('bill');
+        $cash = $request->input('cash');
+        $total_balance = $request->input('total_balance');
+        
+        // update the customer table
+        $customer = Customer::where('username', $customer_id)->first();
+        $customer->active_bottles = $active_bottles;
+        $customer->total_balance = $total_balance;
+        $customer->save();
+
+        // insert into orders table
+        $order = new Orders;
+        $order->order_no = $order_no;
+        $order->username = $customer_id;
+        $order->type = $bottletype;
+        $order->empty_bottles = $empty_bottles;
+        $order->filled_bottles = $filled_bottles;
+        $order->bill = $bill;
+        $order->cash = $cash;
+        $order->save();
+
+        return redirect()->route('employee', ['employee' => Session::get('employee')])->with('success', 'Order placed successfully');  
     }
 
     public function returnToSector($sector, $subsector){
