@@ -31,30 +31,48 @@
                 <div class="col-md-10 my-4">
                     <div class='p-4 contlayout'>
                         <h2> Orders </h2>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <p class="m-2 text-muted">Sort By</p>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="1" selected>Name</option>
-                                    <option value="2">Email</option>
-                                    <option value="3">Phone</option>
-                                </select>
+                        <form action="{{route('adminViewOrder', ['admin' => $admin])}}" method="post">
+                            @csrf
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <p class="m-2 text-muted">Find By</p>
+                                    <select id='findBy' class="form-select" aria-label="Default select example">
+                                        <option class='muted' disbaled selected>Choose</option>
+                                        <option value="1">Date</option>
+                                        <option value="2">Month</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <p class="m-2 text-muted monthLbl">Month</p>
+                                    <input disabled id='month' name='month' type="month" class="form-control">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <p class="m-2 text-muted dateLbl">Date</p>
+                                    <input disabled id='date' name='date' type="date" class="form-control">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <p class="m-2 text-muted">Orders</p>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected value="1">Ascending</option>
+                                        <option value="2">Descending</option>
+                                    </select>
+                                </div>
+                                <div class="mt-3 col-md-6 d-flex align-items-center">
+                                    <p class="m-2 text-muted">Search</p>
+                                    <input type="text" placeholder="Search" class="form-control">
+                                </div>
+
+                                <div class="col-md-3 mt-3">
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <p class="m-2 text-muted">Orders</p>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected value="1">Ascending</option>
-                                    <option value="2">Descending</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="m-2 text-muted">Search</p>
-                                <input type="text" placeholder="Search" class="form-control">
-                            </div>
-                        </div>
+                        </form>
 
                         <div class='row'>
-                            <div class="col-md-12 my-3">
+                            <div class="col-md-12 my-2 mt-5">
                                 <div class='p-4 contlayout'>
                                     <div class="table-responsive">
                                         <!-- Add a responsive wrapper -->
@@ -70,11 +88,16 @@
                                             <tbody>
                                                 @foreach($orders as $order)
                                                 <tr onclick="redirectToOrderDetails({{$order->order_no}})">
-                                                    <td>{{$order->order_date}}</td>
+                                                    @if ($id == 1)
+                                                    <td>{{ $order->created_at->format('H:i:s A') }}</td>
+                                                    @else
+                                                    <td>{{ $order->created_at->format('d-M-Y H:i:s A') }}</td>
+                                                    @endif
+
                                                     <td>{{$order->username}}</td>
                                                     <td>{{$order->customer->name}}</td>
-                                                    <td>{{$order->total_amount}}</td>
-                                               </tr>
+                                                    <td>{{$order->bill}}</td>
+                                                </tr>
                                                 @endforeach
                                                 <!-- Add more table rows here if needed -->
                                             </tbody>
@@ -101,6 +124,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.getElementById("dashboard").classList.add("active");
+
 function redirectToAdmin() {
     // redirect to route
     window.location.href = "{{route('admin', ['admin' => $admin])}}";
@@ -110,6 +134,16 @@ function redirectToOrderDetails(orderId) {
     // redirect to route
     window.location.href = "{{ url('/orderDetails') }}" + orderId;
 }
+
+document.getElementById("findBy").addEventListener("change", function() {
+    if (this.value == 1) {
+        document.getElementById("month").disabled = true;
+        document.getElementById("date").disabled = false;
+    } else {
+        document.getElementById("month").disabled = false;
+        document.getElementById("date").disabled = true;
+    }
+});
 </script>
 
 </html>

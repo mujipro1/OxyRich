@@ -57,7 +57,12 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="col-md-6">
+                                    <div class="label-select-container">
+                                        <label for="bill_no" class="form-label">Bill No.</label>
+                                        <input placeholder='Optional' type="bill_no" name="bill_no" id="bill_no" class="form-control my-3">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class='row'>

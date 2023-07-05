@@ -198,4 +198,10 @@ return [
 
     'same_site' => 'lax',
 
+    // Set different session names for each user type
+    'session_admin' => env('SESSION_ADMIN', 'admin_session'),
+    'session_employee' => env('SESSION_EMPLOYEE', 'employee_session'),
+    'session_customer' => env('SESSION_CUSTOMER', 'customer_session'),
+
+
 ];

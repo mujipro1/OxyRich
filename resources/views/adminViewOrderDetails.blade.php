@@ -18,7 +18,7 @@
 
         <div class="container pb-5">
             <div class="row">
-                <nav class="navbar nav3 navbar-expand-lg"></nav>
+                <nav class="navbar nav2 navbar-expand-lg"></nav>
             </div>
         </div>
 
@@ -54,29 +54,33 @@
                                         </tr>
                                         <tr>
                                             <td class="text-start"> Order Date </td>
-                                            <td class="text-start"> {{$order->order_date}} </td>
+                                            <td class="text-start"> {{$order->created_at->format('d-M-Y H:i:s A')}} </td>
                                         </tr>
                                         <tr>
                                             <td class="text-start"> Type </td>
                                             <td class="text-start"> {{$order->type}} </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-start"> Quantity </td>
-                                            <td class="text-start"> {{$order->quantity}} </td>
+                                            <td class="text-start"> Emptied Bottles </td>
+                                            <td class="text-start"> {{$order->empty_bottles}} </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-start"> Bottle Price </td>
-                                            <td class="text-start"> {{$order->bottle_price}} </td>
+                                            <td class="text-start"> Filled Bottles </td>
+                                            <td class="text-start"> {{$order->filled_bottles}} </td>
                                         </tr>
                                         <tr>
                                             <td class="text-start"> Total Amount </td>
-                                            <td class="text-start"> {{$order->total_amount}} </td>
+                                            <td class="text-start"> {{$order->bill}} </td>
                                         </tr>
+                                        <tr>
+                                            <td class="text-start"> Active Bottles </td>
+                                            <td class="text-start"> {{$order->customer->active_bottles}} </td>
+                                        </tr>   
                                         <tr>
                                             <td class="text-start"> Bill No</td>
                                             <td class="text-start"> {{$order->bill_no}} </td>
                                         </tr>
-                                    </tbody>
+
                                 </table>
                             </div>
                         </form>

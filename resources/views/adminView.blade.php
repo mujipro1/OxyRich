@@ -19,12 +19,14 @@
     <div class="alert alert-danger">
         {{Session::get('fail')}}
     </div>
+    {{Session::forget('fail')}}
     @endif
 
     @if(Session::get('emptyID'))
     <div class="alert alert-danger">
         {{Session::get('emptyID')}}
     </div>
+    {{Session::forget('emptyID')}}
     @endif
 
         <div class="container pb-5">

@@ -26,6 +26,7 @@
         <div class="alert alert-danger">
             {{Session::get('fail')}}
         </div>
+        {{Session::forget('fail')}}
         @endif
 
         <div class="container">

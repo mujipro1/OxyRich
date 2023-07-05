@@ -52,7 +52,7 @@ Route::get('/sign-up', function () {
 // ----------------------------
 
 
-Route::middleware('checksession')->group(function () {
+Route::middleware('checksessioncustomer')->group(function () {
 
 // customer view routes
 
@@ -60,15 +60,18 @@ Route::get('/customer', function () {
     return view('customerView');
 }) -> name('customer');
 
-// --------------------------------------
+Route::get('/logoutCustomer', 'App\Http\Controllers\UserController@logoutCustomer')->name('logoutCustomer');
 
+// --------------------------------------
+});
 
 
 // employee view routes 
 
+Route::middleware('checksessionemp')->group(function(){
 
 Route::get('/employee{employee}', 'App\Http\Controllers\employeeController@viewEmployee')->name('employee');
-
+Route::get('/logoutEmployee', 'App\Http\Controllers\UserController@logoutEmployee')->name('logoutEmployee');
 
 Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
 Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
@@ -86,15 +89,17 @@ Route::get('/order', function () {
     return view('placeOrderEmp');
 }) -> name('order');
 
-
+});
 // ----------------------------------------
 
 
 
 // admin view routes
 
+Route::middleware('checksession')->group(function(){
 
 Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
+Route::get('/logoutAdmin', 'App\Http\Controllers\UserController@logoutAdmin')->name('logoutAdmin');
 
 
 Route::get('/CustomerList', 'App\Http\Controllers\adminController@viewCustomerList')->name('CustomerList');
@@ -110,6 +115,7 @@ Route::get('/customerEdit{customerId}', 'App\Http\Controllers\adminController@ed
 Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveChanges')->name('saveCustomerChanges');
 
 Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
+Route::post('/adminViewOrder{admin}', 'App\Http\Controllers\adminController@viewOrder')->name('adminViewOrder');
 
 Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewOrderDetails')->name('orderDetails');
 
@@ -120,3 +126,5 @@ Route::get('/AddNewCustomer', function(){
 Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
 // -------------------------------------------
 });
+
+// logout routes

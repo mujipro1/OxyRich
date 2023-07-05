@@ -15,7 +15,6 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_no');
-            $table->timestamp('order_date')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->bigInteger('username');
             $table->enum('type', ['19L', '6L', '1.5L', '0.5L']);
             $table->integer('empty_bottles');
@@ -28,6 +27,11 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
         });
     }
+
+    
+
+
+
 
     /**
      * Reverse the migrations.

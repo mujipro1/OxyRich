@@ -85,14 +85,8 @@ nav2Code = `
     <li class="nav-item">
       <a id='dashboard' class="nav-link" href="/dashboard">Dashboard</a>
     </li>
-    <li class="nav-item">
-      <a id='invoices' class="nav-link" href="/invoices">Invoices</a>
-    </li>
-    <li class="nav-item">
-    <a id='contact' class="nav-link" href="/contact">Contact</a>
-    </li>
-    <li class="nav-item">
-      <a id='logout' href='/logout' class="nav-link">Logout</a>
+     <li class="nav-item">
+      <a id='logout' href='/logoutAdmin' class="nav-link">Logout</a>
     </li>
   </ul>
 </div>
@@ -117,10 +111,7 @@ nav3Code = `
       <a id='dashboard' class="nav-link" href="/dashboard">Dashboard</a>
     </li>
     <li class="nav-item">
-    <a id='contact' class="nav-link" href="/contact">Contact</a>
-    </li>
-    <li class="nav-item">
-      <a id='logout' href='/logout' class="nav-link">Logout</a>
+      <a id='logout' href='/logoutEmployee' class="nav-link">Logout</a>
     </li>
   </ul>
 </div>

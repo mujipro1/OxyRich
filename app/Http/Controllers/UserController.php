@@ -35,7 +35,7 @@ class UserController extends Controller
             // Add your role-based redirection logic here
             if ($user->roll === 'admin') {
                 $admin = Admin::where('username', $credentials['username'])->first();                
-                Session::put('admin', $admin);
+                Session::put(config('session.session_admin'), $admin);
                 // call a route and pass it the admin object
                 return redirect()->route('admin', ['admin' => $admin]);
 
@@ -43,11 +43,11 @@ class UserController extends Controller
                 // return view('adminView', ['admin' => $admin]);
             } elseif ($user->roll === 'employee') {
                 $employee = Employee::where('username', $credentials['username'])->first();
-                Session::put('employee', $employee);
+                Session::put(config('session.session_employee'), $employee);
                 return view('employeeView', ['employee' => $employee]);
             } else {
                 $customer = Customer::where('username', $credentials['username'])->first();
-                Session::put('customer', $customer);
+                Session::put(config('session.session_customer'), $customer);
                 return view('customerView', ['customer' => $customer]);
             }
 
@@ -57,6 +57,29 @@ class UserController extends Controller
         }
     }
     
+    public function logoutAdmin()
+    {
+        if (Session::has(config('session.session_admin'))) {
+            Session::forget(config('session.session_admin'));
+        }
+        return redirect()->route('login');    
+    }
+
+    public function logoutEmployee()
+    {
+        if (Session::has(config('session.session_employee'))) {
+            Session::forget(config('session.session_employee'));
+        }
+        return redirect()->route('login');    
+    }
+
+    public function logoutCustomer()
+    {
+        if (Session::has(config('session.session_customer'))) {
+            Session::forget(config('session.session_customer'));
+        }
+        return redirect()->route('login');    
+    }
 
 
     public function authenticateAdmin(Request $req){
@@ -69,7 +92,7 @@ class UserController extends Controller
         $caller = $req->input('caller');
 
         // admin password
-        $admin = Session::get('admin');
+        $admin = Session::get(config('session.session_admin'));
         $user = Session::get('user');
         $adminPassword = $user->password;
 

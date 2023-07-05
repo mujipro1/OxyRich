@@ -16,8 +16,8 @@ class adminController extends Controller
     }
 
     public function viewCustomerList(){
-        if (Session::has('admin')) {
-            $admin = Session::get('admin');
+        if (Session::has(config('session.session_admin'))) {
+            $admin = Session::get(config('session.session_admin'));
             $customers = Customer::all();
             return view('adminCustomerList', ['admin' => $admin, 'customers' => $customers]);
         } else {
@@ -78,16 +78,39 @@ class adminController extends Controller
 
         if($id == 1){
             // all orders
-            $orders = Orders::where('created_at', date('Y-m-d'))->with('customer')->get();
-            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get('admin')]);
+            $orders = Orders::whereDate('created_at', '=', date('Y-m-d'))->with('customer')->orderBy('created_at', 'desc')->get();
+            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
         }
         
         if($id == 2){
-            // today's orders
-            $orders = Orders::with('customer')->get();
-            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get('admin')]);
+            $orders = Orders::with('customer')->orderBy('created_at', 'desc')->get();
+            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
         }
       
+    }
+
+    public function viewOrder($admin, Request $req){
+        $req->validate([
+            'findBy' => 'required',
+            'date' => 'required_if:findBy,1',
+            'month' => 'required_if:findBy,2'
+        ]);
+
+        $id = $req->input('findBy');
+        $date = $req->input('date');
+        $month = $req->input('month');
+
+        if ($date){
+            // find by date
+            $orders = Orders::whereDate('created_at', '=', $date)->with('customer')->orderBy('created_at', 'desc')->get();
+            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
+        }
+
+        if($month){
+            // find by month
+            $orders = Orders::whereMonth('created_at', '=', $month)->with('customer')->orderBy('created_at', 'desc')->get();
+            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
+        }
     }
 
     public function viewOrderDetails($id){

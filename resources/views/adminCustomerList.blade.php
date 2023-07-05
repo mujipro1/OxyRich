@@ -19,6 +19,7 @@
         <div class="alert alert-success">
             {{Session::get('success')}}
         </div>
+        {{Session::forget('success')}}}
         @endif
 
 

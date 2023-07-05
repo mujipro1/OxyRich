@@ -38,6 +38,7 @@ class employeeController extends Controller
         $empty_bottles = $request->input('empty_bottles');
         $filled_bottles = $request->input('filled_bottles');
         $active_bottles = $request->input('active_bottles');
+        $bill_no = $request->input('bill_no');
         
         $bill = $request->input('bill');
         $cash = $request->input('cash');
@@ -58,9 +59,15 @@ class employeeController extends Controller
         $order->filled_bottles = $filled_bottles;
         $order->bill = $bill;
         $order->cash = $cash;
+        if($bill_no){
+            $order->bill_no = $bill_no;
+        }
+        else{
+            $order->bill_no = 0;
+        }
         $order->save();
 
-        return redirect()->route('employee', ['employee' => Session::get('employee')])->with('success', 'Order placed successfully');  
+        return redirect()->route('employee', ['employee' => Session::get(config('session.session_employee'))])->with('success', 'Order placed successfully');  
     }
 
     public function returnToSector($sector, $subsector){
@@ -74,7 +81,7 @@ class employeeController extends Controller
     }
 
     public function sectors(){
-        $employee = Session::get('employee');
+        $employee = Session::get(config('session.session_employee'));
         return view('sectorView', ['employee' => $employee]);
     }
 

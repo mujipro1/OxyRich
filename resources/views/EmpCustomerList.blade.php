@@ -19,11 +19,12 @@
         <div class="alert alert-success">
             {{Session::get('success')}}
         </div>
+        {{Session::forget('success')}}
         @endif
 
         <div class="container pb-5">
             <div class="row">
-                <nav class="navbar nav2 navbar-expand-lg"></nav>
+                <nav class="navbar nav3 navbar-expand-lg"></nav>
             </div>
         </div>
 

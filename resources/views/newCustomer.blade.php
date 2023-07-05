@@ -23,12 +23,13 @@
         </div>
 
 
-        @if(session('error'))
+        @if(Session::get('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{session('error')}}
+            {{Session::get('error')}}
         </div>
+        {{Session::forget('error')}}
         @endif
-        
+
 
         <div class="container">
             <div class="row">
@@ -46,7 +47,8 @@
                             <div class="row">
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="name" class="form-label constant-width mx-3 mt-2">Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+                                    <input type="text" name="name" class="form-control" placeholder="Full Name"
+                                        required>
                                 </div>
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="username" class="form-label constant-width mx-3 mt-2">CNIC</label>
@@ -97,15 +99,16 @@
                             <div class="row">
                                 <div class=" col-md-6 d-flex align-items-center">
                                     <label for="password" class="form-label constant-width mx-3 mt-2">Password</label>
-                                    <input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
+                                    <input id="password" type="password" name="password" class="form-control"
+                                        placeholder="Password" required>
                                 </div>
                                 <div class=" col-md-6 d-flex align-items-center">
                                     <label for="confirmPassword" class="form-label constant-width mx-3 mt-2">Confirm
                                         Password</label>
-                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
-                                        placeholder="Confirm Password" required>
+                                    <input type="password" id="confirmPassword" name="confirmPassword"
+                                        class="form-control" placeholder="Confirm Password" required>
                                 </div>
-                                <div class='mx-3 error2'></div> 
+                                <div class='mx-3 error2'></div>
                                 <div class='mx-3 error'></div>
                             </div>
 
