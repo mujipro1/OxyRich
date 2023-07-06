@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class employeeController extends Controller
 {
+
+    public function EmpHome(){
+        if (Session::has(config('session.session_employee'))) {
+            $employee = Session::get(config('session.session_employee'));
+            return redirect()->route('employee', ['employee' => $employee]);
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
     public function submitSector(Request $req){
 
         $sector = $req->input('sector');
@@ -25,14 +35,18 @@ class employeeController extends Controller
 
     public function placeOrder($customerId){
         $customer = Customer::where('username', $customerId)->first();
-        $lastOrder = Orders::orderBy('order_no', 'desc')->first();
-        $lastOrderId = ($lastOrder->order_no)+1;
-        return view('placeOrderEmp', ['customer' => $customer, 'OrderId' => $lastOrderId]);
+        return view('placeOrderEmp', ['customer' => $customer]);
     }
 
     public function submitOrder(Request $request){
         // get the form data 
-        $order_no = $request->input('order_no');
+        $lastOrder = Orders::orderBy('order_no', 'desc')->first();
+        if($lastOrder){
+            $order_no = $lastOrder->order_no + 1;
+        }
+        else{
+            $order_no = 1;
+        }
         $customer_id = $request->input('customer_id');
         $bottletype = $request->input('bottletype');
         $empty_bottles = $request->input('empty_bottles');

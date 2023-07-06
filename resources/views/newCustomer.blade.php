@@ -94,6 +94,15 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="my-2 col-md-12 d-flex align-items-center">
+                                    <label for="description"
+                                        class="form-label constant-width mx-2 px-2 mt-2">Description</label>
+                                    <textarea name="description" class="form-control" style="height: 80px;resize: none;"
+                                        ></textarea>
+                                </div>
+                            </div>
+
                             <p class='muted mt-5 mx-3'> Set up a Password </p>
 
                             <div class="row">

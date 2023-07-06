@@ -38,7 +38,7 @@
 
         <div class="container side">
             <div class="row">
-                <div class="mt-3 col-md-6">
+                <div class="my-3 col-md-6">
                     <div class='p-4 contlayout'>
                        <h2> Orders </h2>
                        <p class="m-3 text-muted"> View orders of today or all orders. </p>
@@ -46,7 +46,7 @@
                        <button onclick="window.location.href='/viewOrderDetails2'" class="myBtn4 m-2">All Orders</button>
                     </div>
                 </div>
-                <div class='col-md-6 mt-3'>
+                <div class='col-md-6 my-3'>
                     <div class='p-4 contlayout'>
                         <form action="{{route('adminAuth')}}" method='post'>
                             @CSRF
@@ -56,12 +56,12 @@
                             <input hidden value='' name='caller' id='caller' class="form-control">
                             <button onclick="setCaller('C')" type='submit' class="myBtn3 m-2">View Customers</button>
                             <button onclick="setCaller('E')"  class="myBtn4 m-2">View Employees</button>
-                            <p class="m-3 text-muted"> Admin has the right to add, edit and delete users. </p>
+                            <p class="m-3 text-muted"> Admin has the right to add, edit and deactivate users. </p>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class='row'>
+            <!-- <div class='row'>
                 <div class="col-md-12 my-3">
                     <div class='p-4 contlayout'>
                         <h2> Sales Graph </h2>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
         

@@ -37,12 +37,10 @@
                             <h2 class='my-2'>Order Details</h2>
 
                             <div class='customerDetailsOrder'>
-                                <div> Order ID : {{$OrderId}} </div>
                                 <div> Customer ID : {{$customer->username}} </div>
                                 <div> Customer Name : {{$customer->name}} </div>
                             </div>
 
-                            <input type="hidden" name="order_no" value="{{$OrderId}}">
                             <input type="hidden" name="customer_id" value="{{$customer->username}}">
 
                             <div class="row">
@@ -76,7 +74,7 @@
                                 <div class="col-md-6">
                                     <div class="label-select-container">
                                         <label for="filled_bottles" class="form-label">Filled Bottles</label>
-                                        <input required type="number" name="filled_bottles" id="filled_bottles"
+                                        <input required type="number" id="filled_bottles" name="filled_bottles" id="filled_bottles"
                                             class="form-control my-3">
                                     </div>
                                 </div>
@@ -101,11 +99,11 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 my-3">
                                         <div class="label-select-container">
-                                            <label for="bill" class="form-label">Bill</label>
-                                            <input required type="number" name="bill" id="bill"
-                                                class="form-control my-3">
+                                            <label class="form-label">Bill</label>
+                                            <label id='bill' class="form-label"></label>
+                                            <input hidden name='bill' id='billInput'>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -163,11 +161,12 @@ function redirectBack() {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cash').addEventListener('keyup', calculateBalance);
-    document.getElementById('bill').addEventListener('keyup', calculateBalance);
 
     function calculateBalance() {
         var cash = document.getElementById('cash').value;
-        var bill = document.getElementById('bill').value;
+        var bill = document.getElementById('bill').innerHTML;
+        bill = bill.replace('/-', '');
+        bill = parseInt(bill);
         var balance = bill - cash;
         document.getElementById('balance').innerHTML = balance;
         document.getElementById('total_balance').innerHTML = {{$customer->total_balance}} + balance;  
@@ -191,7 +190,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('active_bottlesInput').value = parseInt({{$customer->active_bottles}}) + filled_bottles - empty_bottles;
     }
     
+    document.getElementById('filled_bottles').addEventListener('keyup', calculateBill);
+
+    function calculateBill(){
+        var filled_bottles = parseInt(document.getElementById('filled_bottles').value);
+        var price = {{$customer->bottle_price}};
+        var bill = filled_bottles * price;
+        document.getElementById('bill').innerHTML = bill+' /-';
+        document.getElementById('billInput').value = bill;
+    } 
 });
+
 
 
 </script>

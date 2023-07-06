@@ -70,6 +70,9 @@ Route::get('/logoutCustomer', 'App\Http\Controllers\UserController@logoutCustome
 
 Route::middleware('checksessionemp')->group(function(){
 
+Route::get("dashboardE", 'App\Http\Controllers\employeeController@EmpHome')->name('DashboardA');
+
+
 Route::get('/employee{employee}', 'App\Http\Controllers\employeeController@viewEmployee')->name('employee');
 Route::get('/logoutEmployee', 'App\Http\Controllers\UserController@logoutEmployee')->name('logoutEmployee');
 
@@ -98,6 +101,8 @@ Route::get('/order', function () {
 
 Route::middleware('checksession')->group(function(){
 
+Route::get("dashboardA", "App\Http\Controllers\adminController@AdminHome")->name('DashboardA');
+
 Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
 Route::get('/logoutAdmin', 'App\Http\Controllers\UserController@logoutAdmin')->name('logoutAdmin');
 
@@ -116,6 +121,7 @@ Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveCh
 
 Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
 Route::post('/adminViewOrder{admin}', 'App\Http\Controllers\adminController@viewOrder')->name('adminViewOrder');
+Route::post('/adminView2Order{admin}', 'App\Http\Controllers\adminController@view2Order')->name('adminView2Order');
 
 Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewOrderDetails')->name('orderDetails');
 
@@ -124,7 +130,10 @@ Route::get('/AddNewCustomer', function(){
 })->name('AddNewCustomer');
 
 Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
-// -------------------------------------------
+Route::post('/searchCustomer', 'App\Http\Controllers\adminController@searchCustomer')->name('searchCustomer');
+Route::get('/searchCustomer', 'App\Http\Controllers\adminController@viewCustomerList')->name('searchCustomer');
+
 });
 
+// -------------------------------------------
 // logout routes

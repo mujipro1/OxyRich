@@ -53,6 +53,18 @@
                                             <td class="text-start"> {{$order->customer->name}} </td>
                                         </tr>
                                         <tr>
+                                            <td class="text-start"> Sector </td>
+                                            <td class="text-start"> {{$order->customer->sector}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start"> Subsector </td>
+                                            <td class="text-start"> {{$order->customer->subsector}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-start"> Address </td>
+                                            <td class="text-start"> {{$order->customer->address}} </td>
+                                        </tr>
+                                        <tr>
                                             <td class="text-start"> Order Date </td>
                                             <td class="text-start"> {{$order->created_at->format('d-M-Y H:i:s A')}} </td>
                                         </tr>

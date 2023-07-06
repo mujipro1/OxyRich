@@ -263,6 +263,39 @@
       border: 2px solid #00661f;
       color: rgb(213, 213, 213);
     }
+    .myBtn6{
+      width: 40px;
+      min-height: 40px;
+      padding: 5px;
+      border-radius: 100%;
+      background-color: white;
+      color: white;
+      border: none;
+      transition: all .5s ease-in-out;
+      margin-left: 15px;
+    }
+
+    #search{
+      fill: rgb(130, 130, 130);
+      transition: all .2s ease-in-out;
+    }
+
+    #refresh{
+      fill: rgb(130, 130, 130);
+      transition: all .2s ease-in-out;
+      width: 21px;
+      height: 21px;
+    }
+
+    .myBtn6:hover{
+      #search{
+        fill: rgb(58, 58, 58);
+      }
+      #refresh{
+        fill: rgb(58, 58, 58);
+      }
+    }
+
     .btnWidth{
       width: 100%;
       min-height: 40px;

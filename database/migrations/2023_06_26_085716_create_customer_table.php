@@ -25,6 +25,7 @@ class CreateCustomerTable extends Migration
             $table->decimal('bottle_price', 10, 2);
             $table->string('bottle_type', 100)->default('19L');
             $table->integer('no_of_bottles');
+            $table->text('description')->nullable();
             $table->integer('active_bottles')->default(0);
             $table->decimal('total_balance', 10, 2)->default(0);
             $table->decimal('per_bottle_security', 10, 2);

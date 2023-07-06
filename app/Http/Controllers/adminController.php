@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Session;
 class adminController extends Controller
 {
 
+    public function AdminHome(){
+        if (Session::has(config('session.session_admin'))) {
+            $admin = Session::get(config('session.session_admin'));
+            return redirect()->route('admin', ['admin' => $admin]);
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
     public function viewAdmin($admin){
         return view('adminView', ['admin' => $admin]);
     }
@@ -24,6 +33,35 @@ class adminController extends Controller
             return redirect()->route('login');
         }
     }
+
+    public function searchCustomer(Request $request){
+        $request->validate([
+            'search' => 'required'
+        ]);
+
+        // check which button was clicked, search or refresh
+        if($request->has('searchBtn')){
+            // search button was clicked
+            $search = $request->input('search');
+
+            if($search){
+                $customers = Customer::where('username', 'LIKE', '%'.$search.'%')->orWhere('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('phone_no', 'LIKE', '%'.$search.'%')->orWhere('email', 'LIKE', '%'.$search.'%')
+                ->orWhere('sector', 'LIKE', '%'.$search.'%')->orWhere('subsector', 'LIKE', '%'.$search.'%')->get();
+                return view('adminCustomerList', ['admin' => Session::get(config('session.session_admin')), 'customers' => $customers]);
+            }
+            else{
+                return redirect()->route('CustomerList');
+            }
+        }
+
+        else if($request->has('refreshBtn')){
+            // refresh button was clicked
+            return redirect()->route('CustomerList');
+        }
+
+    }
+
 
     public function edit($customerId)
     {
@@ -57,7 +95,6 @@ class adminController extends Controller
             'address' => 'required'
         ]);
         
-
         $name = $req->input('name');
         $email = $req->input('email');
         $phone = $req->input('phone');
@@ -79,38 +116,105 @@ class adminController extends Controller
         if($id == 1){
             // all orders
             $orders = Orders::whereDate('created_at', '=', date('Y-m-d'))->with('customer')->orderBy('created_at', 'desc')->get();
-            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
+            $total_sale_amount = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('bill');
+            $total_cash_received = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('cash');
+            $total_bottle_sales = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('filled_bottles');
+            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')),
+             'id'=>$id, 'total_sale_amount'=>$total_sale_amount, 'total_cash_received'=>$total_cash_received, 'total_bottle_sales'=>$total_bottle_sales]);
         }
         
         if($id == 2){
             $orders = Orders::with('customer')->orderBy('created_at', 'desc')->get();
-            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
+            $total_sale_amount = Orders::sum('bill');
+            $total_cash_received = Orders::sum('cash');
+            $total_bottle_sales = Orders::sum('filled_bottles');
+            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')),
+             'id'=>$id, 'total_sale_amount'=>$total_sale_amount, 'total_cash_received'=>$total_cash_received, 'total_bottle_sales'=>$total_bottle_sales]);
         }
-      
     }
 
     public function viewOrder($admin, Request $req){
-        $req->validate([
-            'findBy' => 'required',
-            'date' => 'required_if:findBy,1',
-            'month' => 'required_if:findBy,2'
-        ]);
 
-        $id = $req->input('findBy');
         $date = $req->input('date');
-        $month = $req->input('month');
-
-        if ($date){
-            // find by date
-            $orders = Orders::whereDate('created_at', '=', $date)->with('customer')->orderBy('created_at', 'desc')->get();
-            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
+        $search = $req->input('search');
+        $asc = $req->input('asc');
+        
+        $query = Orders::with('customer');
+        
+        if ($search) {
+            $query->whereHas('customer', function ($q) use ($search) {
+                $q->where('name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('username', 'LIKE', '%' . $search . '%')
+                    ->orWhere('order_no', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%')
+                    ->orWhere('sector', 'LIKE', '%' . $search . '%')
+                    ->orWhere('subsector', 'LIKE', '%' . $search . '%');
+            });
         }
-
-        if($month){
-            // find by month
-            $orders = Orders::whereMonth('created_at', '=', $month)->with('customer')->orderBy('created_at', 'desc')->get();
-            return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')), 'id'=>$id]);
+        
+        if ($asc === '1') {
+            $query->orderBy('created_at', 'asc');
+        } elseif ($asc === '2') {
+            $query->orderBy('created_at', 'desc');
         }
+        
+        if ($date) {
+            $query->whereDate('created_at', $date);
+            $total_bottle_sales = Orders::whereDate('created_at', $date)->sum('filled_bottles');
+            $total_sale_amount = Orders::whereDate('created_at', $date)->sum('bill');
+            $total_cash_received = Orders::whereDate('created_at', $date)->sum('cash');
+        }
+        else{
+            $total_bottle_sales = Orders::sum('filled_bottles');
+            $total_sale_amount = Orders::sum('bill');
+            $total_cash_received = Orders::sum('cash');
+        }
+        
+        $orders = $query->get();
+
+        return view("adminViewOrder", [
+            'orders' => $orders,
+            'admin' => Session::get(config('session.session_admin')),
+            'id' => 2,
+            'total_sale_amount' => $total_sale_amount,
+            'total_cash_received' => $total_cash_received,
+            'total_bottle_sales' => $total_bottle_sales
+        ]);
+                     
+    }
+
+    public function view2Order($admin, Request $req){
+        $search = $req->input('search');
+        
+        $query = Orders::whereDate('created_at', '=', date('Y-m-d'))
+                       ->with('customer');
+        
+        if ($search) {
+            $query->whereHas('customer', function ($q) use ($search) {
+                $q->where('name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('username', 'LIKE', '%' . $search . '%')
+                    ->orWhere('order_no', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%')
+                    ->orWhere('sector', 'LIKE', '%' . $search . '%')
+                    ->orWhere('subsector', 'LIKE', '%' . $search . '%');
+                });
+            }
+            
+        $orders = $query->orderBy('created_at', 'desc')->get();
+        
+        $total_bottle_sales = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('filled_bottles');
+        $total_sale_amount = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('bill');
+        $total_cash_received = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('cash');
+
+        return view("adminViewOrder", [
+            'orders' => $orders,
+            'admin' => Session::get(config('session.session_admin')),
+            'id' => 1,
+            'total_sale_amount' => $total_sale_amount,
+            'total_cash_received' => $total_cash_received,
+            'total_bottle_sales' => $total_bottle_sales
+        ]);
+        
     }
 
     public function viewOrderDetails($id){
@@ -139,6 +243,7 @@ class adminController extends Controller
         $username = $request->input('username');
         $phone = $request->input('phone');
         $email = $request->input('email');
+        $description = $request->input('description');
         $sector = $request->input('sector');
         $subsector = $request->input('subsector');
         $address = $request->input('address');
@@ -152,7 +257,7 @@ class adminController extends Controller
         $dispenserSec = $request->input('securityD');
         $noofDispensers = $request->input('noofDispensers');
 
-        $username = str_replace('-', '', $username);
+       $username = str_replace('-', '', $username);
 
         if($password != $confirmPassword){
             return redirect()->back()->with('error', 'Passwords do not match!');
@@ -188,6 +293,10 @@ class adminController extends Controller
             $customer->dispenser = false;
             $customer->per_dispenser_security = 0;
             $customer->no_of_dispenser = 0;
+        }
+
+        if ($description) {
+            $customer->description = $description;
         }
 
         $customer->is_active = true;
