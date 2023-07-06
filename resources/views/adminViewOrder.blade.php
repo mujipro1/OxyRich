@@ -131,11 +131,15 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Date/Time</th>
-                                                    <th scope="col">Customer ID</th>
                                                     <th scope="col">Customer Name</th>
-                                                    <th scope="col">Sector</th>
-                                                    <th scope="col">Subsector</th>
-                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Empty Bottles</th>
+                                                    <th scope="col">Filled Bottles</th>
+                                                    <th scope="col">Bill</th>
+                                                    <th scope="col">Cash</th>
+                                                    <th scope="col">Balance</th>
+                                                    <!-- <th scope="col">Sector</th>
+                                                    <th scope="col">Subsector</th> -->
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -147,11 +151,15 @@
                                                     <td>{{ $order->created_at->format('d-M-Y H:i:s A') }}</td>
                                                     @endif
 
-                                                    <td>{{$order->username}}</td>
                                                     <td>{{$order->customer->name}}</td>
-                                                    <td>{{$order->customer->sector}}</td>
-                                                    <td>{{$order->customer->subsector}}</td>
+                                                    <td>{{$order->empty_bottles}}</td>
+                                                    <td>{{$order->filled_bottles}}</td>
                                                     <td>{{$order->bill}}</td>
+                                                    <td>{{$order->cash}}</td>
+                                                    <td>{{$order->balance}}</td>
+                                                    <!-- <td>{{$order->customer->sector}}</td>
+                                                    <td>{{$order->customer->subsector}}</td> -->
+                                                    
                                                 </tr>
                                                 @endforeach
                                                 <!-- Add more table rows here if needed -->
@@ -161,30 +169,35 @@
                                 </div>
 
                                 <div class="col-md-12 contlayout p-4 mt-4" style="min-height:100px;">
-                                    <h4 class="mb-4 mx-2">Summary</h4>
+                                    <h2 class="mb-4 mx-2">Summary</h2>
                                     <div class="col-md-8 my-2">
                                     <div class="label-select-container">
-                                        <label class="form-label">Total Bottles Sale</label>
+                                        <label class="form-label"><strong>Total Bottles Sale</strong></label>
                                         <label id='total_bottle_sale' class="form-label">{{intval($total_bottle_sales)}}</label>
                                     </div>
                                     </div>
                                     <div class="col-md-8 my-2">
                                     <div class="label-select-container">
-                                        <label class="form-label">Total Sale Amount</label>
-                                        <label id='total_sale_amount' class="form-label">{{intval($total_sale_amount)}}</label>
-                                    </div>
-                                    </div>
-                                    
-                                    <div class="col-md-8 my-2">
-                                    <div class="label-select-container">
-                                        <label class="form-label">Total Cash Recieved</label>
+                                        <label class="form-label"><strong>Total Cash Received</strong></label>
                                         <label id='total_balance_amount' class="form-label">{{intval($total_cash_received)}}</label>
                                     </div>
                                     </div>
                                     <div class="col-md-8 my-2">
-                                        <div class="label-select-container">
-                                        <label class="form-label">Total Balance Amount</label>
+                                    <div class="label-select-container">
+                                        <label class="form-label"><strong>Total Balance Amount</strong></label>
                                         <label id='total_balance_amount' class="form-label">{{$total_sale_amount - $total_cash_received}}</label>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-8 my-2">
+                                    <div class="label-select-container">
+                                        <label class="form-label"><strong>Total Sales Amount</strong></label>
+                                        <label id='total_sale_amount' class="form-label">{{intval($total_sale_amount)}}</label>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-8 my-2">
+                                    <div class="label-select-container">
+                                        <label class="form-label"><strong>Total Empty Bottles</strong></label>
+                                        <label id='total_empty_bottles' class="form-label">{{intval($total_bottle_sales)}}</label>
                                     </div>
                                     </div>
                                 </div>
