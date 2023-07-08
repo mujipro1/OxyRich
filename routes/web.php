@@ -71,26 +71,10 @@ Route::get('/logoutCustomer', 'App\Http\Controllers\UserController@logoutCustome
 Route::middleware('checksessionemp')->group(function(){
 
 Route::get("dashboardE", 'App\Http\Controllers\employeeController@EmpHome')->name('DashboardA');
-
-
 Route::get('/employee{employee}', 'App\Http\Controllers\employeeController@viewEmployee')->name('employee');
 Route::get('/logoutEmployee', 'App\Http\Controllers\UserController@logoutEmployee')->name('logoutEmployee');
-
-Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
-Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
-Route::get('/sectors', 'App\Http\Controllers\employeeController@sectors')->name('sectors');
-Route::get('/submitSector{sector}_{subsector}', 'App\Http\Controllers\employeeController@returnToSector')->name('returnToSector');
-Route::post('/submitOrder', 'App\Http\Controllers\employeeController@submitOrder')->name('submitOrder');
-
 Route::get('/bottleDetails{employee}', 'App\Http\Controllers\employeeController@bottleDetails')->name('bottleDetails');
-// Route::get('/subsector/{sector}', function ($sector) {
-//     return view('subsector', ['sector' => $sector]);
-// })-> name('subsector');
 
-
-Route::get('/order', function () {
-    return view('placeOrderEmp');
-}) -> name('order');
 
 });
 // ----------------------------------------
@@ -98,7 +82,19 @@ Route::get('/order', function () {
 
 
 // admin view routes
-
+Route::middleware('ordercheck')->group(function(){
+    
+    Route::get('/order', function () {
+        return view('placeOrderEmp');
+    }) -> name('order');
+    
+    Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
+    Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
+    Route::get('/sectors', 'App\Http\Controllers\employeeController@sectors')->name('sectors');
+    Route::get('/submitSector{sector}_{subsector}', 'App\Http\Controllers\employeeController@returnToSector')->name('returnToSector');
+    Route::post('/submitOrder', 'App\Http\Controllers\employeeController@submitOrder')->name('submitOrder');
+    
+});
 Route::middleware('checksession')->group(function(){
 
 Route::get("dashboardA", "App\Http\Controllers\adminController@AdminHome")->name('DashboardA');
@@ -132,6 +128,8 @@ Route::get('/AddNewCustomer', function(){
 Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
 Route::post('/searchCustomer', 'App\Http\Controllers\adminController@searchCustomer')->name('searchCustomer');
 Route::get('/searchCustomer', 'App\Http\Controllers\adminController@viewCustomerList')->name('searchCustomer');
+
+Route::post("/submit-expenses", "App\Http\Controllers\adminController@submitExpenses")->name("submit-expenses");
 
 });
 

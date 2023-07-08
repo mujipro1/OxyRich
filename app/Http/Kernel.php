@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'checksession' => \App\Http\Middleware\CheckSessionMiddleware::class,
         'checksessionemp' => \App\Http\Middleware\CheckSessionMiddlewareEmp::class,
         'checksessioncustomer' => \App\Http\Middleware\CheckSessionMiddlewareCustomer::class,
+        'ordercheck' => \App\Http\Middleware\OrderCheck::class,
     ];
 }

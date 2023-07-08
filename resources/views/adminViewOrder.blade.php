@@ -21,6 +21,12 @@
             </div>
         </div>
 
+        @if(Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+        {{Session::forget('success')}}
+        @endif
 
         <div class="container side">
             <div class='row'>
@@ -36,12 +42,12 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-3 mt-3 d-flex align-items-center">
-                                    <p class="m-2 text-muted constant-width dateLbl">Date</p>
+                                    <p class="m-2 text-muted dateLbl" style="width:60px;">Date</p>
                                     <input id='date' name='date' type="date" class="form-control">
                                 </div>
 
                                 <div class="col-md-3 mt-3 d-flex align-items-center">
-                                    <p class="m-2 text-muted constant-width">Orders</p>
+                                    <p class="m-2 text-muted">Orders</p>
                                     <select class="form-select" name="asc" aria-label="Default select example">
                                         <option selected value="2">Descending</option>
                                         <option value="1">Ascending</option>
@@ -139,7 +145,7 @@
                                                     <th scope="col">Balance</th>
                                                     <!-- <th scope="col">Sector</th>
                                                     <th scope="col">Subsector</th> -->
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -159,7 +165,7 @@
                                                     <td>{{$order->balance}}</td>
                                                     <!-- <td>{{$order->customer->sector}}</td>
                                                     <td>{{$order->customer->subsector}}</td> -->
-                                                    
+
                                                 </tr>
                                                 @endforeach
                                                 <!-- Add more table rows here if needed -->
@@ -168,52 +174,116 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 contlayout p-4 mt-4" style="min-height:100px;">
-                                    <h2 class="mb-4 mx-2">Summary</h2>
-                                    <div class="col-md-8 my-2">
-                                    <div class="label-select-container">
-                                        <label class="form-label"><strong>Total Bottles Sale</strong></label>
-                                        <label id='total_bottle_sale' class="form-label">{{intval($total_bottle_sales)}}</label>
+                                <div class="row contlayout p-4 mx-1 mt-4" style="min-height:100px;">
+                                    <h4 class="mb-4 mt-2 ml-2">Summary</h4>
+                                    <div class="col-md-6 my-2">
+                                        <div class="label-select-container">
+                                            <label class="form-label"><strong>Total Bottles Sale</strong></label>
+                                            <label id='total_bottle_sale'
+                                                class="form-label">{{intval($total_bottle_sales)}}</label>
+                                        </div>
                                     </div>
+                                    <div class="col-md-6 my-2">
+                                        <div class="label-select-container">
+                                            <label class="form-label"><strong>Total Cash Received</strong></label>
+                                            <label id='total_balance_amount'
+                                                class="form-label">{{intval($total_cash_received)}}</label>
+                                        </div>
                                     </div>
-                                    <div class="col-md-8 my-2">
-                                    <div class="label-select-container">
-                                        <label class="form-label"><strong>Total Cash Received</strong></label>
-                                        <label id='total_balance_amount' class="form-label">{{intval($total_cash_received)}}</label>
+                                    <div class="col-md-6 my-2">
+                                        <div class="label-select-container">
+                                            <label class="form-label"><strong>Total Balance Amount</strong></label>
+                                            <label id='total_balance_amount'
+                                                class="form-label">{{$total_sale_amount - $total_cash_received}}</label>
+                                        </div>
                                     </div>
+                                    <div class="col-md-6 my-2">
+                                        <div class="label-select-container">
+                                            <label class="form-label"><strong>Total Sales Amount</strong></label>
+                                            <label id='total_sale_amount'
+                                                class="form-label">{{intval($total_sale_amount)}}</label>
+                                        </div>
                                     </div>
-                                    <div class="col-md-8 my-2">
-                                    <div class="label-select-container">
-                                        <label class="form-label"><strong>Total Balance Amount</strong></label>
-                                        <label id='total_balance_amount' class="form-label">{{$total_sale_amount - $total_cash_received}}</label>
+                                    <div class="col-md-6 my-2">
+                                        <div class="label-select-container">
+                                            <label class="form-label"><strong>Total Empty Bottles</strong></label>
+                                            <label id='total_empty_bottles'
+                                                class="form-label">{{intval($total_empty_bottles)}}</label>
+                                        </div>
                                     </div>
+
+                                    @if($id == 1)
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <hr class="my-4">
+                                        </div>
                                     </div>
-                                    <div class="col-md-8 my-2">
-                                    <div class="label-select-container">
-                                        <label class="form-label"><strong>Total Sales Amount</strong></label>
-                                        <label id='total_sale_amount' class="form-label">{{intval($total_sale_amount)}}</label>
+
+                                    <div class="col-md-12">
+                                        <form action="{{route('submit-expenses')}}" method='post'>
+                                            @csrf
+                                            <h4 class='mb-3'>Expenses</h4>
+                                            <div class="row">
+
+                                                <div class=" col-md-6 my-2 d-flex align-items-center">
+                                                    <label for="petrol"
+                                                        class="form-label constant-width2 mx-3 mt-2">Petrol
+                                                        Expense</label>
+                                                    @if ($expense)
+                                                    <input id="petrol" type="number" name="petrol_expense"
+                                                        value="{{$expense->petrol_expense}}" class="form-control">
+                                                    @else
+                                                    <input id="petrol" type="number" name="petrol_expense" class="form-control">
+                                                    @endif
+                                                </div>
+
+                                                <div class=" col-md-6 my-2 d-flex align-items-center">
+                                                    <label for="emp_wage"
+                                                        class="form-label constant-width2 mx-3 mt-2">Employee
+                                                        Wage</label>
+
+                                                    @if ($expense)
+                                                    <input id="emp_wage" type="number" name="employee_wage"
+                                                        value="{{$expense->employee_wage}}" class="form-control">
+                                                    @else
+                                                    <input id="emp_wage" type="number" name="employee_wage"
+                                                        class="form-control">
+                                                    @endif
+                                                </div>
+
+                                                <div class=" col-md-6 my-2 d-flex align-items-center">
+                                                    <label for="bottle_filling_charges"
+                                                        class="form-label constant-width2 mx-3 mt-2">Filling
+                                                        Charges</label>
+                                                    @if ($expense)
+                                                    <input id="bottle_filling_charges" type="number"
+                                                        value="{{$expense->filling_charges}}"
+                                                        name="bottle_filling_charges" class="form-control">
+                                                    @else
+                                                    <input id="bottle_filling_charges" type="number"
+                                                        name="bottle_filling_charges" class="form-control">
+                                                    @endif
+                                                </div><br>
+                                            </div>
+
+                                            <div class="my-3 d-flex align-items-center justify-content-center">
+                                                <button class="myBtn5 saveBtn" type='submit' name='addBtn'>Save</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    </div>
-                                    <div class="col-md-8 my-2">
-                                    <div class="label-select-container">
-                                        <label class="form-label"><strong>Total Empty Bottles</strong></label>
-                                        <label id='total_empty_bottles' class="form-label">{{intval($total_bottle_sales)}}</label>
-                                    </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
 
 
-
-
-        <footer></footer>
+    <footer></footer>
     </div>
 
 </body>

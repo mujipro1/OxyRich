@@ -98,8 +98,8 @@
                                 <div class="my-2 col-md-12 d-flex align-items-center">
                                     <label for="description"
                                         class="form-label constant-width mx-2 px-2 mt-2">Description</label>
-                                    <textarea name="description" class="form-control" style="height: 80px;resize: none;"
-                                        ></textarea>
+                                    <textarea name="description" class="form-control"
+                                        style="height: 80px;resize: none;"></textarea>
                                 </div>
                             </div>
 

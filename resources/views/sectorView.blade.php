@@ -16,11 +16,20 @@
 <body>
     <div class="c1">
 
+        @if($id == 1)
+        <div class="container pb-5">
+            <div class="row">
+                <nav class="navbar nav2 navbar-expand-lg"></nav>
+            </div>
+        </div>
+        @elseif($id == 2)
         <div class="container pb-5">
             <div class="row">
                 <nav class="navbar nav3 navbar-expand-lg"></nav>
             </div>
         </div>
+
+        @endif
 
         @if (Session::get('fail'))
         <div class="alert alert-danger">
@@ -78,8 +87,13 @@
 <script>
 document.getElementById("dashboard").classList.add("active");
 
+
 function redirectToEmployee() {
+    @if($id == 2)
     window.location.href = "{{route('employee', ['employee' => $employee])}}";
+    @elseif($id == 1)
+    window.location.href = "{{route('admin', ['admin' => $admin])}}";
+    @endif
 }
 </script>
 
