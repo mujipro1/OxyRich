@@ -264,7 +264,7 @@
       color: rgb(213, 213, 213);
     }
     .myBtn6{
-      width: 40px;
+      width: 30px;
       min-height: 40px;
       padding: 5px;
       border-radius: 100%;
@@ -417,6 +417,9 @@ tr:hover{
 
 .constant-width{
   width:100px;
+}
+.constant-width2{
+  width:200px;
 }
 
 .brokeLink{

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\User;
 use App\Models\Orders;
+use App\Models\Expense;
 use Illuminate\Support\Facades\Session;
 
 class adminController extends Controller
@@ -14,14 +15,48 @@ class adminController extends Controller
     public function AdminHome(){
         if (Session::has(config('session.session_admin'))) {
             $admin = Session::get(config('session.session_admin'));
-            return redirect()->route('admin', ['admin' => $admin]);
+            $expenses = Expense::whereMonth('created_at', date('m'))->get();
+            $bill = Orders::whereMonth('created_at', date('m'))->sum('bill');
+            
+            $sum_petrol = Expense::whereMonth('created_at', date('m'))->sum('petrol_expense');
+            $sum_employee = Expense::whereMonth('created_at', date('m'))->sum('employee_wage');
+            $sum_filling = Expense::whereMonth('created_at', date('m'))->sum('filling_charges');
+            $sum_sales = Expense::whereMonth('created_at', date('m'))->sum('sales');
+
+            $profit = $sum_sales - ($sum_petrol + $sum_employee + $sum_filling);
+
+            $array = array();
+            $array[0] = $sum_petrol;
+            $array[1] = $sum_employee;
+            $array[2] = $sum_filling;
+            $array[3] = $sum_sales;
+            $array[4] = $profit;
+            
+            return redirect()->route('admin', ['admin' => $admin, 'expenses' => $expenses, 'bill' => $bill, 'array' => $array]);
         } else {
             return redirect()->route('login');
         }
     }
 
     public function viewAdmin($admin){
-        return view('adminView', ['admin' => $admin]);
+        $expenses = Expense::whereMonth('created_at', date('m'))->get();
+        $bill = Orders::whereMonth('created_at', date('m'))->sum('bill');
+
+        $sum_petrol = Expense::whereMonth('created_at', date('m'))->sum('petrol_expense');
+            $sum_employee = Expense::whereMonth('created_at', date('m'))->sum('employee_wage');
+            $sum_filling = Expense::whereMonth('created_at', date('m'))->sum('filling_charges');
+            $sum_sales = Expense::whereMonth('created_at', date('m'))->sum('sales');
+
+            $profit = $sum_sales - ($sum_petrol + $sum_employee + $sum_filling);
+
+            $array = array();
+            $array[0] = $sum_petrol;
+            $array[1] = $sum_employee;
+            $array[2] = $sum_filling;
+            $array[3] = $sum_sales;
+            $array[4] = $profit;
+            
+        return view('adminView', ['admin' => $admin, 'expenses' => $expenses, 'bill' => $bill, 'array' => $array]);
     }
 
     public function viewCustomerList(){
@@ -114,13 +149,15 @@ class adminController extends Controller
     public function findOrder($id){
 
         if($id == 1){
-            // all orders
             $orders = Orders::whereDate('created_at', '=', date('Y-m-d'))->with('customer')->orderBy('created_at', 'desc')->get();
             $total_sale_amount = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('bill');
             $total_cash_received = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('cash');
             $total_bottle_sales = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('filled_bottles');
+            $total_empty_bottles = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('empty_bottles');
+            $expense = Expense::whereDate('created_at', '=', date('Y-m-d'))->first();
             return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')),
-             'id'=>$id, 'total_sale_amount'=>$total_sale_amount, 'total_cash_received'=>$total_cash_received, 'total_bottle_sales'=>$total_bottle_sales]);
+             'id'=>$id, 'total_sale_amount'=>$total_sale_amount, 'total_cash_received'=>$total_cash_received,
+             'total_bottle_sales'=>$total_bottle_sales, 'total_empty_bottles'=>$total_empty_bottles, 'expense'=>$expense]);
         }
         
         if($id == 2){
@@ -128,8 +165,10 @@ class adminController extends Controller
             $total_sale_amount = Orders::sum('bill');
             $total_cash_received = Orders::sum('cash');
             $total_bottle_sales = Orders::sum('filled_bottles');
+            $total_empty_bottles = Orders::sum('empty_bottles');
             return view("adminViewOrder", ['orders' => $orders, 'admin' => Session::get(config('session.session_admin')),
-             'id'=>$id, 'total_sale_amount'=>$total_sale_amount, 'total_cash_received'=>$total_cash_received, 'total_bottle_sales'=>$total_bottle_sales]);
+             'id'=>$id, 'total_sale_amount'=>$total_sale_amount, 'total_cash_received'=>$total_cash_received,
+             'total_bottle_sales'=>$total_bottle_sales, 'total_empty_bottles'=>$total_empty_bottles, 'expense'=>null]);
         }
     }
 
@@ -163,12 +202,15 @@ class adminController extends Controller
             $total_bottle_sales = Orders::whereDate('created_at', $date)->sum('filled_bottles');
             $total_sale_amount = Orders::whereDate('created_at', $date)->sum('bill');
             $total_cash_received = Orders::whereDate('created_at', $date)->sum('cash');
+            $total_empty_bottles = Orders::whereDate('created_at', $date)->sum('empty_bottles');
         }
         else{
             $total_bottle_sales = Orders::sum('filled_bottles');
             $total_sale_amount = Orders::sum('bill');
             $total_cash_received = Orders::sum('cash');
+            $total_empty_bottles = Orders::sum('empty_bottles');
         }
+
         
         $orders = $query->get();
 
@@ -178,7 +220,8 @@ class adminController extends Controller
             'id' => 2,
             'total_sale_amount' => $total_sale_amount,
             'total_cash_received' => $total_cash_received,
-            'total_bottle_sales' => $total_bottle_sales
+            'total_bottle_sales' => $total_bottle_sales,
+            'total_empty_bottles' => $total_empty_bottles
         ]);
                      
     }
@@ -205,6 +248,8 @@ class adminController extends Controller
         $total_bottle_sales = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('filled_bottles');
         $total_sale_amount = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('bill');
         $total_cash_received = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('cash');
+        $total_empty_bottles = Orders::whereDate('created_at', '=', date('Y-m-d'))->sum('empty_bottles');
+        $expense = Expense::whereDate('created_at', '=', date('Y-m-d'))->first();
 
         return view("adminViewOrder", [
             'orders' => $orders,
@@ -212,7 +257,9 @@ class adminController extends Controller
             'id' => 1,
             'total_sale_amount' => $total_sale_amount,
             'total_cash_received' => $total_cash_received,
-            'total_bottle_sales' => $total_bottle_sales
+            'total_bottle_sales' => $total_bottle_sales,
+            'total_empty_bottles' => $total_empty_bottles,
+            'expense' => $expense    
         ]);
         
     }
@@ -304,6 +351,40 @@ class adminController extends Controller
 
 
         return redirect()->route('CustomerList')->with('success', 'New Customer Added!');
+    }
+
+    public function submitExpenses(Request $request){
+
+        $petrol_expense = $request->input('petrol_expense');
+        $employee_wage = $request->input('employee_wage');
+        $bottle_filling_charge = $request->input('bottle_filling_charges');
+
+        $date = date('Y-m-d');
+
+        // check if todays expenses are already added
+        $expense = Expense::whereDate('created_at', $date)->first();
+        if($expense){
+            // update the record
+            $expense->petrol_expense = $petrol_expense;
+            $expense->employee_wage = $employee_wage;
+            $expense->filling_charges = $bottle_filling_charge;
+            $expense->save();
+
+            return redirect()->back()->with('success', 'Expense Updated!');
+        }
+        
+        else{
+            $expense = new Expense;
+            $expense->petrol_expense = $petrol_expense;
+            $expense->employee_wage = $employee_wage;
+            $expense->filling_charges = $bottle_filling_charge;
+            $expense->no_of_daily_bottles = 0;
+            $expense->sales = 0;
+            $expense->created_at = $date;
+            $expense->save();
+        }
+
+        return redirect()->back()->with('success', 'Expense Added!');
     }
 
 }

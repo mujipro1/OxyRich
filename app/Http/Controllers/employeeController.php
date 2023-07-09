@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Orders;
 use App\Models\Employee;
+use App\Models\Expense;
 use Session;
 use Illuminate\Http\Request;
 
@@ -73,6 +74,23 @@ class employeeController extends Controller
         $order->filled_bottles = $filled_bottles;
         $order->bill = $bill;
         $order->cash = $cash;
+
+        // update expense tabel
+        $expense = Expense::whereDate('created_at', date('Y-m-d'))->first();
+        if($expense){
+            $expense->sales += $bill;
+            $expense->save();
+        }
+        else{
+            $expense = new Expense;
+            $expense->sales = $bill;
+            $expense->petrol_expense = 0;
+            $expense->employee_wage = 0;
+            $expense->no_of_daily_bottles = 0;
+            $expense->filling_charges = 0;
+            $expense->save();
+        }
+
         if($bill_no){
             $order->bill_no = $bill_no;
         }
@@ -81,7 +99,14 @@ class employeeController extends Controller
         }
         $order->save();
 
-        return redirect()->route('employee', ['employee' => Session::get(config('session.session_employee'))])->with('success', 'Order placed successfully');  
+        $employee = Session::get(config('session.session_employee'));
+        $admin = Session::get(config('session.session_admin'));
+        if ($admin){
+            return redirect()->route('admin', ['admin' => $admin])->with('success', 'Order placed successfully');
+        }
+        else{
+            return redirect()->route('employee', ['employee' => $employee])->with('success', 'Order placed successfully');
+        }
     }
 
     public function returnToSector($sector, $subsector){
@@ -96,7 +121,15 @@ class employeeController extends Controller
 
     public function sectors(){
         $employee = Session::get(config('session.session_employee'));
-        return view('sectorView', ['employee' => $employee]);
+        $id = 2;
+        $admin = Session::get(config('session.session_admin'));
+        if ($admin){
+            $id = 1;
+            return view('sectorView', ['admin' => $admin, 'id' => $id]);
+        }
+        else{
+            return view('sectorView', ['employee' => $employee, 'id' => $id]);
+        }
     }
 
     public function bottleDetails($employee){
