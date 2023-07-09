@@ -95,12 +95,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="{{asset('js/header.js')}}"></script>
 <script>
-document.getElementById("dashboard").classList.add("active");
-
 function redirectToOrder(customerId) {
     window.location.href = '/placeOrder' + customerId;
 }
-
 </script>
 
 </html>
