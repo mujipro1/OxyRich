@@ -50,7 +50,7 @@
                     <div class='p-4 contlayout'>
                         <form action="{{route('adminAuth')}}" method='post'>
                             @CSRF
-                            <h2> Users </h2>
+                            <h2> Customers & Employees </h2>
                             <p class="m-3 text-muted"> Password is required for accessing this information </p>
                             <input name='password' type="password" placeholder="Enter Password" class="form-control m-2" required>
                             <input hidden value='' name='caller' id='caller' class="form-control">
