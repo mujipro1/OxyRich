@@ -74,7 +74,7 @@ Route::get("dashboardE", 'App\Http\Controllers\employeeController@EmpHome')->nam
 Route::get('/employee{employee}', 'App\Http\Controllers\employeeController@viewEmployee')->name('employee');
 Route::get('/logoutEmployee', 'App\Http\Controllers\UserController@logoutEmployee')->name('logoutEmployee');
 Route::get('/bottleDetails{employee}', 'App\Http\Controllers\employeeController@bottleDetails')->name('bottleDetails');
-
+Route::post('submitBottles', 'App\Http\Controllers\employeeController@submitBottles')->name('submitBottles');
 
 });
 // ----------------------------------------

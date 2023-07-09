@@ -31,24 +31,38 @@
                 </div>
                 <div class="my-4 col-md-8">
                     <div class="contlayout p-4">
-                        <form action='submitOrder' method="post">
+                        <form action="{{route('submitBottles')}}" method="post">
                             @CSRF
                         <h2 class='my-2'>Bottle Details</h2>
 
                         <div class="label-select-container">
-                            <label for="filled_bottles" class="form-label">Loaded Bottles</label>
-                            <input required type="number" name="filled_bottles" id="filled_bottles" class="form-control my-3">
+                            <label for="loaded_bottles" class="form-label">Loaded Bottles</label>
+                            @if($bottles)
+                            <input required type="number" name="loaded_bottles" id="loaded_bottles" class="form-control my-3" value="{{$bottles}}">
+                            @else
+                            <input required type="number" name="loaded_bottles" id="loaded_bottles" class="form-control my-3">
+                            @endif
                         </div>
                     
                     
-                        <div class="label-select-container">
-                            <label for="cash" class="form-label">Filled Bottles Left</label>
+                        <div class="label-select-container my-3">
+                            <label class="form-label">Bottles Given</label>
+                            <label>{{$filled}}</label>
                         </div>
 
-                        <div class="label-select-container">
-                            <label for="cash" class="form-label">Emptied Bottles</label>
+                        <div class="label-select-container my-3">
+                            <label class="form-label">Bottles Left</label>
+                            <label>{{$bottles-$filled}}</label>
                         </div>
 
+                        <div class="label-select-container my-3">
+                            <label class="form-label">Emptied Bottles</label>
+                            <label>{{$empty}}</label>
+                        </div>
+
+                        <div class='text-center'>
+                            <button type="submit" class="myBtn5 my-5 ">Save</button>
+                        </div>
                         
                         </form>
                     
