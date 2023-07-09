@@ -6,23 +6,23 @@ const sectors = [
     },
     {
       sector: 'E',
-      subsectors: ['E-1', 'E-2', 'E-3', 'E-4', 'E-5']
+      subsectors: ['E-7', 'E-8', 'E-9', 'E-10', 'E-11','E-12', 'E-13', 'E-14', 'E-15', 'E-16','E-17','E-18']
     },
     {
       sector: 'F',
-      subsectors: ['F-1', 'F-2', 'F-3', 'F-4']
+      subsectors: ['F-5', 'F-6', 'F-7', 'F-8','F-9', 'F-10', 'F-11', 'F-12','F-13', 'F-14', 'F-15', 'F-16','F-17']
     },
     {
       sector: 'G',
-      subsectors: ['G-1', 'G-2', 'G-3']
+      subsectors: ['G-5', 'G-6', 'G-7', 'G-8','G-9', 'G-10', 'G-11', 'G-12','G-13', 'G-14', 'G-15', 'G-16','G-17']
     },
     {
       sector: 'H',
-      subsectors: ['H-1', 'H-2', 'H-3', 'H-4']
+      subsectors: ['H-8','H-9', 'H-10', 'H-11', 'H-12','H-13', 'H-14', 'H-15', 'H-16','H-17']
     },
     {
       sector: 'I',
-      subsectors: ['I-1', 'I-2']
+      subsectors: ['I-8','I-9', 'I-10', 'I-11', 'I-12','I-13', 'I-14', 'I-15', 'I-16','I-17','I-18']
     }
   ];
  
