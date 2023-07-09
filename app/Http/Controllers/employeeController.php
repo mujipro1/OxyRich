@@ -131,9 +131,43 @@ class employeeController extends Controller
             return view('sectorView', ['employee' => $employee, 'id' => $id]);
         }
     }
-
+    
     public function bottleDetails($employee){
         $employee = Employee::where('username', $employee)->first();
-        return view('bottleDetails', ['employee' => $employee]);
+        $expense = Expense::whereDate('created_at',  date('Y-m-d'))->first();
+        $filled_bottles = Orders::whereDate('created_at', date('Y-m-d'))->sum('filled_bottles');
+        $empty_bottles = Orders::whereDate('created_at', date('Y-m-d'))->sum('empty_bottles');
+        if($expense){
+            $bottles = $expense->no_of_daily_bottles;
+            return view('bottleDetails', ['employee' => $employee, 'bottles'=>$bottles,
+            'filled'=>$filled_bottles, 'empty'=>$empty_bottles]);
+        }
+        else{
+            return view('bottleDetails', ['employee' => $employee, 'bottles'=>null,
+            'filled'=>$filled_bottles, 'empty'=>$empty_bottles]);
+        }
+    }
+
+    public function submitBottles(Request $request){
+        $bottles = $request->input('loaded_bottles');
+        $expense = Expense::whereDate('created_at', date('Y-m-d'))->first();
+        if($expense){
+            $expense->no_of_daily_bottles = $bottles;
+            $expense->save();
+        }
+
+        else{
+            $expense = new Expense;
+            $expense->petrol_expense = 0;
+            $expense->employee_wage = 0;
+            $expense->filling_charges = 0;
+            $expense->no_of_daily_bottles = $bottles;
+            $expense->sales = 0;
+            $expense->created_at = $date;
+            $expense->save();
+        }
+
+        $employee = Session::get(config('session.session_employee'));
+        return redirect()->route('employee', ['employee' => $employee])->with('success', "Bottles Added Successfully!");
     }
 }
