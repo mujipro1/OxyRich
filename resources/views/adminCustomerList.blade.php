@@ -143,8 +143,8 @@
                                                     <td>{{$customer->username}}</td>
                                                     <td>{{$customer->name}}</td>
                                                     <td>{{$customer->phone_no}}</td>
-                                                    <td>{{$customer->sector}}</td>
-                                                    <td>{{$customer->subsector}}</td>
+                                                    <td>{{$customer->location->sector}}</td>
+                                                    <td>{{$customer->location->subsector}}</td>
                                                     @else
                                                     <td class="muted">{{$customer->username}}</td>
                                                     <td class="muted">{{$customer->name}}</td>

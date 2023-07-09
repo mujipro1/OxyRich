@@ -93,44 +93,47 @@ Route::middleware('ordercheck')->group(function(){
     Route::get('/sectors', 'App\Http\Controllers\employeeController@sectors')->name('sectors');
     Route::get('/submitSector{sector}_{subsector}', 'App\Http\Controllers\employeeController@returnToSector')->name('returnToSector');
     Route::post('/submitOrder', 'App\Http\Controllers\employeeController@submitOrder')->name('submitOrder');
-    
 });
+
+
 Route::middleware('checksession')->group(function(){
 
-Route::get("dashboardA", "App\Http\Controllers\adminController@AdminHome")->name('DashboardA');
+    Route::get("dashboardA", "App\Http\Controllers\adminController@AdminHome")->name('DashboardA');
 
-Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
-Route::get('/logoutAdmin', 'App\Http\Controllers\UserController@logoutAdmin')->name('logoutAdmin');
-
-
-Route::get('/CustomerList', 'App\Http\Controllers\adminController@viewCustomerList')->name('CustomerList');
-
-Route::get('/deactivateCustomer{customerId}', 'App\Http\Controllers\adminController@deactivateCustomer')->name('deactivateCustomer');
-Route::get('/activateCustomer{customerId}', 'App\Http\Controllers\adminController@activateCustomer')->name('activateCustomer');
+    Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
+    Route::get('/logoutAdmin', 'App\Http\Controllers\UserController@logoutAdmin')->name('logoutAdmin');
 
 
-Route::post('/adminAuth', 'App\Http\Controllers\UserController@authenticateAdmin')->name('adminAuth');
+    Route::get('/CustomerList', 'App\Http\Controllers\adminController@viewCustomerList')->name('CustomerList');
 
-Route::get('/customerEdit{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
+    Route::get('/deactivateCustomer{customerId}', 'App\Http\Controllers\adminController@deactivateCustomer')->name('deactivateCustomer');
+    Route::get('/activateCustomer{customerId}', 'App\Http\Controllers\adminController@activateCustomer')->name('activateCustomer');
 
-Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveChanges')->name('saveCustomerChanges');
 
-Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
-Route::post('/adminViewOrder{admin}', 'App\Http\Controllers\adminController@viewOrder')->name('adminViewOrder');
-Route::post('/adminView2Order{admin}', 'App\Http\Controllers\adminController@view2Order')->name('adminView2Order');
+    Route::post('/adminAuth', 'App\Http\Controllers\UserController@authenticateAdmin')->name('adminAuth');
 
-Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewOrderDetails')->name('orderDetails');
+    Route::get('/customerEdit{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
 
-Route::get('/AddNewCustomer', function(){
-    return view("newCustomer");
-})->name('AddNewCustomer');
+    Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveChanges')->name('saveCustomerChanges');
 
-Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
-Route::post('/searchCustomer', 'App\Http\Controllers\adminController@searchCustomer')->name('searchCustomer');
-Route::get('/searchCustomer', 'App\Http\Controllers\adminController@viewCustomerList')->name('searchCustomer');
+    Route::get('/viewOrderDetails{id}' ,'App\Http\Controllers\adminController@findOrder') -> name('viewOrderDetails');
+    Route::post('/adminViewOrder{admin}', 'App\Http\Controllers\adminController@viewOrder')->name('adminViewOrder');
+    Route::post('/adminView2Order{admin}', 'App\Http\Controllers\adminController@view2Order')->name('adminView2Order');
 
-Route::post("/submit-expenses", "App\Http\Controllers\adminController@submitExpenses")->name("submit-expenses");
+    Route::get('/orderDetails{orderId}', 'App\Http\Controllers\adminController@viewOrderDetails')->name('orderDetails');
 
+    Route::get('/AddNewCustomer', 'App\Http\Controllers\adminController@addNewCustomer')->name('AddNewCustomer');
+    Route::post('/submitNewCustomer', 'App\Http\Controllers\adminController@submitNewCustomer')->name('submitNewCustomer');
+    Route::post('/searchCustomer', 'App\Http\Controllers\adminController@searchCustomer')->name('searchCustomer');
+    Route::get('/searchCustomer', 'App\Http\Controllers\adminController@viewCustomerList')->name('searchCustomer');
+
+    Route::post("/submit-expenses", "App\Http\Controllers\adminController@submitExpenses")->name("submit-expenses");
+
+    Route::get("viewLocations", 'App\Http\Controllers\adminController@viewLocations')->name('viewLocations');
+    Route::get("addLocations", 'App\Http\Controllers\adminController@addLocations')->name('addLocations');
+    Route::post("searchSector", 'App\Http\Controllers\adminController@searchSector')->name('searchSector');
+
+    Route::post('addNewLocation', 'App\Http\Controllers\adminController@addNewLocation')->name('addNewLocation');
 });
 
 // -------------------------------------------

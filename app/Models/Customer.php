@@ -17,7 +17,6 @@ class Customer extends Model
         'name',
         'phone_no',
         'address',
-        'sector',
         'bottle_price',
         'no_of_bottles',
         'email',
@@ -26,9 +25,16 @@ class Customer extends Model
         'no_of_dispenser',
         'per_dispenser_security',
         'total_dispenser_security',
+        'location_id'
     ];
 
     public $timestamps = false;
+
+    public function location()
+    {
+        return $this->belongsTo(Locations::class, 'location_id', 'id');
+    }
+
 
     public function user()
     {

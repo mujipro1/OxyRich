@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->integer('filled_bottles');
             $table->decimal('bill', 10, 2);
             $table->decimal('cash', 10, 2);
-            $table->decimal('balance', 10, 2)->storedAs('bill - cash'); //todays's balance
+            $table->decimal('balance', 10, 2)->storedAs('CASE WHEN bill - cash < 0 THEN 0 ELSE bill - cash END');
             $table->integer('bill_no')->nullable();
             $table->foreign('username')->references('username')->on('customer');
             $table->timestamps();

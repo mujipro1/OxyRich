@@ -16,12 +16,8 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('sector', 100);
-            $table->json('subsector');
+            $table->string('subsector');
             $table->timestamps();
-        });
-
-        Schema::table('locations', function (Blueprint $table) {
-            $table->index('sector');
         });
     }
 

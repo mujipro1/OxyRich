@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Locations;
 use App\Models\User;
 use App\Models\Orders;
 use App\Models\Expense;
@@ -62,7 +63,7 @@ class adminController extends Controller
     public function viewCustomerList(){
         if (Session::has(config('session.session_admin'))) {
             $admin = Session::get(config('session.session_admin'));
-            $customers = Customer::all();
+            $customers = Customer::with('location')->get();
             return view('adminCustomerList', ['admin' => $admin, 'customers' => $customers]);
         } else {
             return redirect()->route('login');
@@ -80,9 +81,16 @@ class adminController extends Controller
             $search = $request->input('search');
 
             if($search){
-                $customers = Customer::where('username', 'LIKE', '%'.$search.'%')->orWhere('name', 'LIKE', '%'.$search.'%')
-                ->orWhere('phone_no', 'LIKE', '%'.$search.'%')->orWhere('email', 'LIKE', '%'.$search.'%')
-                ->orWhere('sector', 'LIKE', '%'.$search.'%')->orWhere('subsector', 'LIKE', '%'.$search.'%')->get();
+            $customers = Customer::with("location")
+                ->join('locations', 'location_id', '=', 'id')
+                ->where('username', 'LIKE', '%'.$search.'%')
+                ->orWhere('name', 'LIKE', '%'.$search.'%')
+                ->orWhere('phone_no', 'LIKE', '%'.$search.'%')
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
+                ->orWhere('sector', 'LIKE', '%'.$search.'%')
+                ->orWhere('subsector', 'LIKE', '%'.$search.'%')
+                ->get();
+
                 return view('adminCustomerList', ['admin' => Session::get(config('session.session_admin')), 'customers' => $customers]);
             }
             else{
@@ -100,7 +108,7 @@ class adminController extends Controller
 
     public function edit($customerId)
     {
-        $customer = Customer::where('username', $customerId)->first();
+        $customer = Customer::with("location")->where('username', $customerId)->first();
         return view('customerEdit', ['customer' => $customer]);
     }
 
@@ -319,18 +327,22 @@ class adminController extends Controller
         $user->roll = 'customer';
         $user->save();
 
+        $location = new Location;
+        $location->sector = $sector;
+        $location->subsector = $subsector;
+        $location->save();
+        
         $customer = new Customer;
         $customer->name = $name;
         $customer->username = $username;
         $customer->phone_no = $phone;
         $customer->email = $email;
-        $customer->sector = $sector;
-        $customer->subsector = $subsector;
         $customer->address = $address;
         $customer->bottle_type = $bottletype;
         $customer->bottle_price = $bottle_price;
         $customer->no_of_bottles = $noofbottles;
         $customer->per_bottle_security = $security;
+        $customer->location_id = $location->id; 
         
         if($dispenser == 'yes'){
             $customer->dispenser = true;
@@ -387,4 +399,47 @@ class adminController extends Controller
         return redirect()->back()->with('success', 'Expense Added!');
     }
 
+    public function viewLocations(){
+        $admin = Session::get(config('session.session_admin'));
+        $locations = Locations::withCount('customers')->get();
+        return view("viewLocations", ['admin'=>$admin,'locations'=>$locations , 'all'=>$locations]);
+    }
+
+    public function addLocations(){
+        $admin = Session::get(config('session.session_admin'));
+        $sectors = Locations::select('sector')->distinct()->get();
+        return view("addLocation", ['admin'=>$admin, 'sectors'=>$sectors]);
+    }
+
+    public function searchSector(Request $request){
+        $sector = $request->input("sector");
+        $admin = Session::get(config('session.session_admin'));
+        $all = Locations::withCount('customers')->get();
+
+        if($request->has("searchBtn")){
+            $locations = Locations::withCount('customers')->where("sector",$sector)->get();
+        }
+        else{
+            $locations = Locations::withCount('customers')->get();
+        }
+        return view("viewLocations", ['admin'=>$admin,'locations'=>$locations, 'all'=>$all]);
+    }
+
+    public function addNewLocation(Request $request){
+        $sector = $request->input("sector");
+        $subsector = $request->input("subsector");
+
+        $location = new Locations;
+        $location->sector = $sector;
+        $location->subsector = $subsector;
+        $location->save();
+
+        return redirect()->back()->with('success', 'New Location Added!');
+    }
+
+    public function addNewCustomer(){
+        $sectors = Locations::select('sector')->distinct()->get();
+        $locations = Locations::all();
+        return view("newCustomer", ['sectors'=>$sectors, 'locations'=>$locations]);
+    }
 }

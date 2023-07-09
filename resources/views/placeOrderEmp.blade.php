@@ -156,7 +156,7 @@
 document.getElementById("dashboard").classList.add("active");
 
 function redirectBack() {
-    window.location.href = '/submitSector' + '{{$customer->sector}}' + '_' + '{{$customer->subsector}}';
+    window.location.href = '/submitSector' + '{{$customer->location->sector}}' + '_' + '{{$customer->location->subsector}}';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -168,7 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
         bill = bill.replace('/-', '');
         bill = parseInt(bill);
         var balance = bill - cash;
-        document.getElementById('balance').innerHTML = balance;
+        if(balance < 0){
+            document.getElementById('balance').innerHTML = 0;
+        }
+        else{
+            document.getElementById('balance').innerHTML = balance;
+        }
         document.getElementById('total_balance').innerHTML = {{$customer->total_balance}} + balance;  
         document.getElementById('total_balanceInput').value = {{$customer->total_balance}} + balance;
     }

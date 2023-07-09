@@ -10,5 +10,12 @@ class Locations extends Model
     use HasFactory;
     protected $table = "locations";
     protected $primaryKey = "id";
-    //Define relationships and customizations here
+
+    protected $fillable = ['sector', 'subsector'];
+
+    public function customers()
+        {
+            return $this->hasMany(Customer::class, 'location_id');
+        }
+        
 }

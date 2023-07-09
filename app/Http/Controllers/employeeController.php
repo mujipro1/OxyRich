@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Orders;
 use App\Models\Employee;
+use App\Models\Locations;
 use App\Models\Expense;
 use Session;
 use Illuminate\Http\Request;
@@ -29,7 +30,10 @@ class employeeController extends Controller
             return redirect()->back()->with('fail', 'Please select a sector and subsector');
         }
         else{
-            $customers = Customer::where('sector', $sector)->where('subsector', $subsector)->get();
+            $customers = Customer::whereHas('location', function ($query) use ($sector, $subsector) {
+                $query->where('sector', $sector)->where('subsector', $subsector);
+            })->get();
+            
             return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers]);
         }
     }
@@ -110,7 +114,10 @@ class employeeController extends Controller
     }
 
     public function returnToSector($sector, $subsector){
-        $customers = Customer::where('sector', $sector)->where('subsector', $subsector)->get();
+        $customers = Customer::whereHas('location', function ($query) use ($sector, $subsector) {
+            $query->where('sector', $sector)->where('subsector', $subsector);
+        })->get();
+        
         return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers]);
     }
 
@@ -122,13 +129,14 @@ class employeeController extends Controller
     public function sectors(){
         $employee = Session::get(config('session.session_employee'));
         $id = 2;
+        $locations = Locations::all();
         $admin = Session::get(config('session.session_admin'));
         if ($admin){
             $id = 1;
-            return view('sectorView', ['admin' => $admin, 'id' => $id]);
+            return view('sectorView', ['admin' => $admin, 'id' => $id,'locations'=>$locations]);
         }
         else{
-            return view('sectorView', ['employee' => $employee, 'id' => $id]);
+            return view('sectorView', ['employee' => $employee, 'id' => $id,'locations'=>$locations]);
         }
     }
     

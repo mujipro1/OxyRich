@@ -46,9 +46,9 @@
 
         <div class="container side">
             <div class="row">
-                <div class="my-3 col-md-6">
+                <div class="my-3 col-md-4">
                     <div class='p-4 contlayout'>
-                        <h2> Orders </h2>
+                        <h3 class="my-2 mb-4"> Orders </h3>
                         <p class="mx-3 mt-3 mb-2 text-muted"> View orders of today or all orders. </p>
                         <button onclick="window.location.href='/sectors'" class="myBtn3 m-2">Add Order&nbsp |&nbsp +
                         </button>
@@ -59,19 +59,27 @@
                         <p class="mx-3 mt-3 mb-2 text-muted"> Admin can add, edit and view all orders. </p>
                     </div>
                 </div>
-                <div class='col-md-6 my-3'>
+                <div class='col-md-4 my-3'>
                     <div class='p-4 contlayout'>
                         <form action="{{route('adminAuth')}}" method='post'>
                             @CSRF
-                            <h2> Customers & Employees </h2>
+                            <h3 class="my-2 mb-4"> Customers & Employees </h3>
                             <p class="m-3 text-muted"> Password is required for accessing this information </p>
                             <input name='password' type="password" placeholder="Enter Password" class="form-control m-2"
                                 required>
                             <input hidden value='' name='caller' id='caller' class="form-control">
                             <button onclick="setCaller('C')" type='submit' class="myBtn3 m-2">View Customers</button>
                             <button onclick="setCaller('E')" class="myBtn4 m-2">View Employees</button>
-                            <p class="m-3 text-muted"> Admin has the right to add, edit and deactivate users. </p>
                         </form>
+                    </div>
+                </div>
+                <div class='col-md-4 my-3'>
+                    <div class='p-4 contlayout'>
+                            @CSRF
+                            <h3 class="my-2 mb-4"> Locations </h3>
+                            <p class="m-3 text-muted"> Manage Sectors and Subsectors</p>
+                            <button onclick="window.location.href='/viewLocations'" class="myBtn3 m-2">View Locations</button>
+                            <button onclick="window.location.href='/addLocations'" class="myBtn4 m-2">Add Location &nbsp| &nbsp+</button>
                     </div>
                 </div>
             </div>

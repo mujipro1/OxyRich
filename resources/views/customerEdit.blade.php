@@ -64,14 +64,14 @@
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="sector" class="form-label constant-width mx-3 mt-2">Sector</label>
                                     <select disabled name="sector" id="sector" class="specialSector text-muted form-control" required>
-                                        <option value="Select Sector" selected>{{$customer->sector}}</option>
+                                        <option value="Select Sector" selected>{{$customer->location->sector}}</option>
                                     </select>
                                 </div>
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="subsector" id="subLabel"
                                         class="muted form-label constant-width mx-3 mt-2">SubSector</label>
                                     <select disabled name="subsector" id="subsector" class="specialSubsector text-muted form-control" required>
-                                        <option value="Select Subsector" selected>{{$customer->subsector}}</option>
+                                        <option value="Select Subsector" selected>{{$customer->location->subsector}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -99,7 +99,6 @@
 
 </body>
 <script src="{{asset('js/header.js')}}"></script>
-<script src="{{asset('js/subsector.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.getElementById("dashboard").classList.add("active");

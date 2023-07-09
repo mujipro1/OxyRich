@@ -73,7 +73,10 @@
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="sector" class="form-label constant-width mx-3 mt-2">Sector</label>
                                     <select name="sector" id="sector" class="text-muted form-control" required>
-                                        <option value="Select Sector" disabled selected>Select Sector</option>
+                                        <option disabled value="Select Sector" disabled selected>Select Sector</option>
+                                        @foreach ($sectors as $sector)
+                                        <option value="{{ $sector->sector }}">{{ $sector->sector }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="my-2 col-md-6 d-flex align-items-center">
@@ -214,6 +217,31 @@
             </div>
         </div>
 
+        <script>
+        // Get the sector and subsector options
+        let sectorOptions = document.querySelector('#sector');
+        let subsectorOptions = document.querySelector('#subsector');
+
+        sectorOptions.addEventListener('change', function() {
+            subsectorOptions.innerHTML = '';
+            let selectedSector = this.value;
+            let subsectors = @json($locations -> groupBy('sector'));
+
+            if (subsectors[selectedSector]) {
+                subsectors[selectedSector].forEach(function(location) {
+                    let option = document.createElement('option');
+                    option.text = location.subsector;
+                    option.value = location.subsector;
+                    subsectorOptions.add(option);
+                });
+                subsectorOptions.disabled = false;
+            } else {
+                subsectorOptions.disabled = true;
+            }
+        });
+
+        document.getElementById('subLabel').classList.remove('muted');
+        </script>
 
 
         <footer></footer>
@@ -221,7 +249,6 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{asset('js/subsector.js')}}"></script>
 <script src="{{asset('js/header.js')}}"></script>
 <script src="{{asset('js/newCustomer.js')}}"></script>
 <script>

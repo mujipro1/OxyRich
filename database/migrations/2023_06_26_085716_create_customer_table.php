@@ -18,8 +18,6 @@ class CreateCustomerTable extends Migration
             $table->string('name', 100);
             $table->text('address', 200);
             $table->string('email', 100)->unique();
-            $table->string('sector', 100);
-            $table->string('subsector', 100);
             $table->boolean('is_active')->default(true);
             $table->string('phone_no', 12)->unique();
             $table->decimal('bottle_price', 10, 2);
@@ -35,7 +33,8 @@ class CreateCustomerTable extends Migration
             $table->decimal('per_dispenser_security', 10, 2);
             $table->decimal('total_dispenser_security', 10, 2)->storedAs('no_of_dispenser * per_dispenser_security');
             $table->foreign('username')->references('username')->on('users');
-            $table->foreign('sector')->references('sector')->on('locations');
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')->references('id')->on('locations');
             $table->timestamps();
         });
     }

@@ -268,11 +268,18 @@
       min-height: 40px;
       padding: 5px;
       border-radius: 100%;
-      background-color: white;
+      background-color: transparent;
       color: white;
       border: none;
       transition: all .5s ease-in-out;
       margin-left: 15px;
+    }
+
+    #Bold{
+      width:15px;
+      height:18px;
+      fill: rgb(130, 130, 130);
+      transition: all .2s ease-in-out;
     }
 
     #search{
@@ -294,6 +301,9 @@
       #refresh{
         fill: rgb(58, 58, 58);
       }
+      #Bold{
+        fill: rgb(58, 58, 58);
+      }
     }
 
     .btnWidth{
@@ -310,6 +320,7 @@
       width: 23px;
       height: 23px;
   }
+
   
   .contactSVG{
       display: flex;
@@ -371,9 +382,13 @@
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
-    min-height: 55vh;
+    min-height: 60vh;
 }
 
+.specHighlight{
+  background-color: #ebebeb8f;
+  border-radius: 5px;
+}
 
 .backBtn{
   height: 50px;
@@ -437,4 +452,22 @@ tr:hover{
 
 .accessbuttons{
   margin-bottom: 200px;
+}
+
+.hidden{
+  display:none;
+  transition: all 0.5s ease-in-out;
+}
+
+.shown{
+  display:block;
+  transition: all 0.5s ease-in-out;
+}
+
+.divx:hover{
+  cursor: pointer;
+}
+
+.divx2:hover{
+  cursor: pointer;
 }
