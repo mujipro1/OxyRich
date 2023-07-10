@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Locations;
 use App\Models\User;
 use App\Models\Orders;
+use App\Models\Employee;
 use App\Models\Expense;
 use Illuminate\Support\Facades\Session;
 
@@ -64,7 +65,17 @@ class adminController extends Controller
         if (Session::has(config('session.session_admin'))) {
             $admin = Session::get(config('session.session_admin'));
             $customers = Customer::with('location')->get();
-            return view('adminCustomerList', ['admin' => $admin, 'customers' => $customers]);
+            return view('adminCustomerList', ['admin' => $admin, 'customers' => $customers, 'id'=>1]);
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function viewEmployeeList(){
+        if (Session::has(config('session.session_admin'))) {
+            $admin = Session::get(config('session.session_admin'));
+            $employees = Employee::all();
+            return view('adminCustomerList', ['admin' => $admin, 'employees' => $employees,'id'=>2]);
         } else {
             return redirect()->route('login');
         }
@@ -105,11 +116,11 @@ class adminController extends Controller
 
     }
 
-
     public function edit($customerId)
     {
         $customer = Customer::with("location")->where('username', $customerId)->first();
-        return view('customerEdit', ['customer' => $customer]);
+        $locations = Locations::all();
+        return view('customerEdit', ['customer' => $customer, "locations"=>$locations]);
     }
 
     public function deactivateCustomer($customerId){
@@ -130,18 +141,46 @@ class adminController extends Controller
         return redirect()->back()->with('success', 'Customer Activated!');
     }
 
+    public function deactivateEmployee($employeeId){
+        
+        $employee = Employee::where('username', $employeeId)->first();
+        $employee->is_active = false;
+        $employee->save();
+        
+        return redirect()->back()->with('success', 'Employee Deactivated!');
+    }
+
+    public function activateEmployee($employeeId){
+        
+        $employee = Employee::where('username', $employeeId)->first();
+        $employee->is_active = true;
+        $employee->save();
+        
+        return redirect()->back()->with('success', 'Employee Activated!');
+    }
+
     public function saveChanges(Request $req){
         $req->validate([
             'name' => 'required',
+            'username' =>'required',
             'email' => 'required',
             'phone' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            "sector" => 'required',
+            "subsector" => 'required',
         ]);
         
+        $username = $req->input('username');
         $name = $req->input('name');
         $email = $req->input('email');
         $phone = $req->input('phone');
         $address = $req->input('address');
+        $sector = $req->input('sector');
+        $subsector = $req->input('subsector');
+        $description = $req->input('description');
+
+        $location_id = Locations::where('sector', $sector)->where('subsector', $subsector)->first();
+        $location_id = $location_id->id;
 
         // update record
         $customer = Customer::where('username', $req->input('username'))->first();
@@ -149,6 +188,14 @@ class adminController extends Controller
         $customer->email = $email;
         $customer->phone_no = $phone;
         $customer->address = $address;
+        $customer->location_id = $location_id;
+        if ($description){
+            $customer->description = $description;
+        }
+        else{
+            $customer->description = null;
+        }
+
         $customer->save();
 
         return redirect()->route('CustomerList')->with('success',"Changes made successfully!");
@@ -327,7 +374,7 @@ class adminController extends Controller
         $user->roll = 'customer';
         $user->save();
 
-        $location = new Location;
+        $location = new Locations;
         $location->sector = $sector;
         $location->subsector = $subsector;
         $location->save();

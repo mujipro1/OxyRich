@@ -33,6 +33,7 @@
             <div class="row">
                 <div class="my-3 col-md-12">
                     <div class='p-4 contlayout' style='min-height:16vh;'>
+                        <div class='px-4 muted'> Employee </div>
                         <h2 class='px-3'> {{$employee->name}} </h2>
                         <div class='px-4'> {{$employee->phone_no}} </div>
                         <div class='px-4'> {{$employee->address}} </div>

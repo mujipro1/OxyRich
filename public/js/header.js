@@ -117,6 +117,32 @@ nav3Code = `
 </div>
 </div>
 `
+
+nav4Code = `
+<div class="container">
+<a class="navbar-brand" href="/home"><img src="images/logo.png"></a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  <input type="checkbox" name="toggle-menu" id="toggle-menu">
+  <label for="toggle-menu" type="button" class="toggle-btn">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </label>
+
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+      <a id='dashboard' class="nav-link" href="/dashboardC">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a id='logout' href='/logoutCustomer' class="nav-link">Logout</a>
+    </li>
+  </ul>
+</div>
+</div>
+`
 navbar = document.querySelector('.navbar');
 
 if (navbar.classList.contains('nav2')) {
@@ -124,6 +150,9 @@ if (navbar.classList.contains('nav2')) {
 }
 else if (navbar.classList.contains('nav3')) {
   navbar.innerHTML+=nav3Code;
+}
+else if(navbar.classList.contains('nav4')) {
+  navbar.innerHTML+=nav4Code;
 }
 else{
   navbar.innerHTML+=navBarCode;

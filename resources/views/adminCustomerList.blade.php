@@ -31,9 +31,15 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Confirm Deactivaton</h5>
                     </div>
+                    @if($id == 1)
                     <div class="modal-body">
                         Are you sure you you want to deactivate Customer?
                     </div>
+                    @else
+                    <div class="modal-body">
+                        Are you sure you you want to deactivate Employee?
+                    </div>
+                    @endif
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger deactivate-Btn">Deactivate</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -50,9 +56,15 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Confirm Activation</h5>
                     </div>
+                    @if ($id == 1)
                     <div class="modal-body">
                         Are you sure you you want to activate Customer?
                     </div>
+                    @else
+                    <div class="modal-body">
+                        Are you sure you you want to activate Employee?
+                    </div>
+                    @endif
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success activate-Btn">Activate</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -78,7 +90,14 @@
                 <div class="col-md-10 my-4">
                     <div class='p-4 contlayout'>
                         <div class="d-flex my-3 justify-content-between align-items-center">
+                        @if($id == 1)    
                             <h2 class="d-inline">Customers</h2>
+                        @else
+                            <h2 class="d-inline">Employees</h2>
+                            </div>
+                        @endif
+
+                        @if($id == 1)
                             <button onclick="redirectToNewCustomer()" class="myBtn5">Add New | &nbsp+ </button>
                         </div>
                         <div class="row">
@@ -118,6 +137,8 @@
                             </div>
                         </div>
 
+                        @endif
+
                         <div class='row'>
                             <div class="col-md-12 my-3">
                                 <div class='p-4 contlayout'>
@@ -126,17 +147,24 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    @if($id == 1)
                                                     <th scope="col">CNIC</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Phone</th>
                                                     <th scope="col">Sector</th>
                                                     <th scope="col">Subsector</th>
                                                     <th scope="col">View/Edit</th>
-                                                    <th scope="col">Delete</th>
+                                                    <th scope="col">Deactivate</th>
+                                                    @else
+                                                    <th scope="col">CNIC</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Phone</th>
+                                                    <th scope="col">Deactivate</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                @if($id == 1)
                                                 @foreach($customers as $customer)
                                                 <tr>
                                                     @if($customer->is_active)
@@ -149,8 +177,8 @@
                                                     <td class="muted">{{$customer->username}}</td>
                                                     <td class="muted">{{$customer->name}}</td>
                                                     <td class="muted">{{$customer->phone_no}}</td>
-                                                    <td class="muted">{{$customer->sector}}</td>
-                                                    <td class="muted">{{$customer->subsector}}</td>
+                                                    <td class="muted">{{$customer->location->sector}}</td>
+                                                    <td class="muted">{{$customer->location->subsector}}</td>
                                                     @endif
 
                                                     <td><button onclick="redirectToEdit({{$customer->username}})"
@@ -162,19 +190,53 @@
                                                     <td><button type="button"
                                                             class="btn btn-danger btnWidth deactivateBtn"
                                                             data-toggle="modal" data-target="#exampleModal"
-                                                            data-customerid="{{$customer->username}}">
+                                                            data-customerid="{{$customer->username}}" data-userType="C">
                                                             Deactivate
                                                         </button></td>
                                                     @else
                                                     <td><button type="button"
                                                             class="btn btn-success btnWidth activateBtn"
                                                             data-toggle="modal" data-target="#exampleModal2"
-                                                            data-customerid="{{$customer->username}}">
+                                                            data-customerid="{{$customer->username}}" data-userType="C">
                                                             Activate
                                                         </button></td>
                                                     @endif
                                                 </tr>
                                                 @endforeach
+                                                @else
+                                                @foreach($employees as $employee)
+                                                <tr>
+                                                    @if($employee->is_active)
+                                                    <td>{{$employee->username}}</td>
+                                                    <td>{{$employee->name}}</td>
+                                                    <td>{{$employee->phone_no}}</td>
+                                                    @else
+                                                    <td class="muted">{{$employee->username}}</td>
+                                                    <td class="muted">{{$employee->name}}</td>
+                                                    <td class="muted">{{$employee->phone_no}}</td>
+                                                    @endif
+
+
+                                                    <!-- Button trigger modal -->
+                                                    @if($employee->is_active)
+                                                    <td><button type="button"
+                                                            class="btn btn-danger btnWidth deactivateBtn"
+                                                            data-toggle="modal" data-target="#exampleModal"
+                                                            data-customerid="{{$employee->username}}" data-userType="E">
+                                                            Deactivate
+                                                        </button></td>
+                                                    @else
+                                                    <td><button type="button"
+                                                            class="btn btn-success btnWidth activateBtn"
+                                                            data-toggle="modal" data-target="#exampleModal2"
+                                                            data-customerid="{{$employee->username}}" data-userType="E">
+                                                            Activate
+                                                        </button></td>
+                                                    @endif
+                                                </tr>
+                                                @endforeach
+
+                                                @endif
                                                 <!-- Add more table rows here if needed -->
                                             </tbody>
                                         </table>
@@ -216,11 +278,16 @@ function redirectToNewCustomer() {
 document.querySelectorAll('.deactivateBtn').forEach(function(btn) {
     btn.addEventListener('click', function() {
         var customerId = this.getAttribute('data-customerid');
+        var type = this.getAttribute('data-userType');
         modal = document.querySelector('#exampleModal');
         var deleteBtn = modal.querySelector('.deactivate-Btn');
-        console.log(deleteBtn);
         deleteBtn.addEventListener('click', function() {
-            window.location.href = '/deactivateCustomer' + customerId;
+            if(type == 'C'){
+                window.location.href = '/deactivateCustomer' + customerId;
+            }
+            else{
+                window.location.href = '/deactivateEmployee' + customerId;
+            }
         });
     });
 });
@@ -228,11 +295,17 @@ document.querySelectorAll('.deactivateBtn').forEach(function(btn) {
 document.querySelectorAll('.activateBtn').forEach(function(btn) {
     btn.addEventListener('click', function() {
         var customerId = this.getAttribute('data-customerid');
+        var type = this.getAttribute('data-userType');
         modal = document.querySelector('#exampleModal2');
         var deleteBtn = modal.querySelector('.activate-Btn');
         console.log(deleteBtn);
         deleteBtn.addEventListener('click', function() {
-            window.location.href = '/activateCustomer' + customerId;
+            if(type == 'C'){
+                window.location.href = '/activateCustomer' + customerId;
+            }
+            else{
+                window.location.href = '/activateEmployee' + customerId;
+            }
         });
     });
 });

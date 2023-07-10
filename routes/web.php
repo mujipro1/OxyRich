@@ -56,9 +56,9 @@ Route::middleware('checksessioncustomer')->group(function () {
 
 // customer view routes
 
-Route::get('/customer', function () {
-    return view('customerView');
-}) -> name('customer');
+Route::get('/customer{customer}', 'App\Http\Controllers\CustomerController@viewCustomer')->name('customer');
+
+Route::get("dashboardC", "App\Http\Controllers\CustomerController@CustomerHome")->name('DashboardC');
 
 Route::get('/logoutCustomer', 'App\Http\Controllers\UserController@logoutCustomer')->name('logoutCustomer');
 
@@ -99,15 +99,18 @@ Route::middleware('ordercheck')->group(function(){
 Route::middleware('checksession')->group(function(){
 
     Route::get("dashboardA", "App\Http\Controllers\adminController@AdminHome")->name('DashboardA');
+    Route::get('/logoutAdmin', 'App\Http\Controllers\UserController@logoutAdmin')->name('logoutAdmin');
 
     Route::get('/admin{admin}', "App\Http\Controllers\adminController@viewAdmin")->name('admin');
-    Route::get('/logoutAdmin', 'App\Http\Controllers\UserController@logoutAdmin')->name('logoutAdmin');
 
 
     Route::get('/CustomerList', 'App\Http\Controllers\adminController@viewCustomerList')->name('CustomerList');
+    Route::get('/EmployeeList', 'App\Http\Controllers\adminController@viewEmployeeList')->name('EmployeeList');
 
     Route::get('/deactivateCustomer{customerId}', 'App\Http\Controllers\adminController@deactivateCustomer')->name('deactivateCustomer');
+    Route::get('/deactivateEmployee{employeeId}', 'App\Http\Controllers\adminController@deactivateEmployee')->name('deactivateEmployee');
     Route::get('/activateCustomer{customerId}', 'App\Http\Controllers\adminController@activateCustomer')->name('activateCustomer');
+    Route::get('/activateEmployee{employeeId}', 'App\Http\Controllers\adminController@activateEmployee')->name('activateEmployee');
 
 
     Route::post('/adminAuth', 'App\Http\Controllers\UserController@authenticateAdmin')->name('adminAuth');

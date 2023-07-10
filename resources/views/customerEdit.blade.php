@@ -36,10 +36,11 @@
 
                             <div class="row">
                                 <div class="my-2 col-md-6 d-flex align-items-center">
-                                    <label for="username" class="form-label constant-width mx-3 mt-3">CNIC</label>
-                                    <input disabled type="text" value="{{$customer->username}}" name='username'
-                                        class="form-control" required>
-                                </div>
+                                    <label class="form-label constant-width mx-3 mt-3">CNIC</label>
+                                    <label id='cnic-input'
+                                        class="form-label mt-3">{{$customer->username}}</label>
+                                    <input hidden value="{{$customer->username}}" name="username">
+                                    </div>
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="name" class="form-label constant-width mx-3 mt-3">Name</label>
                                     <input disabled type="text" value="{{$customer->name}}" name='name'
@@ -55,7 +56,7 @@
                                 </div>
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="phone" class="form-label constant-width mx-3 mt-3">Phone</label>
-                                    <input disabled type="number" name='phone' value="{{$customer->phone_no}}"
+                                    <input disabled type="tel" name='phone' value="{{$customer->phone_no}}"
                                         class="form-control" required>
                                 </div>
                             </div>
@@ -64,14 +65,19 @@
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="sector" class="form-label constant-width mx-3 mt-2">Sector</label>
                                     <select disabled name="sector" id="sector" class="specialSector text-muted form-control" required>
-                                        <option value="Select Sector" selected>{{$customer->location->sector}}</option>
+                                        <option value="{{$customer->location->sector}}" selected>{{$customer->location->sector}}</option>
+                                        @foreach($locations->unique('sector') as $location)
+                                            @if($location->sector !== $customer->location->sector)
+                                            <option value="{{$location->sector}}">{{$location->sector}}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="my-2 col-md-6 d-flex align-items-center">
                                     <label for="subsector" id="subLabel"
                                         class="muted form-label constant-width mx-3 mt-2">SubSector</label>
                                     <select disabled name="subsector" id="subsector" class="specialSubsector text-muted form-control" required>
-                                        <option value="Select Subsector" selected>{{$customer->location->subsector}}</option>
+                                        <option value="{{$customer->location->subsector}}" selected>{{$customer->location->subsector}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -84,6 +90,16 @@
                                 </div>
                             </div>
 
+                            
+                            <div class="row">
+                                <div class="my-2 col-md-12 d-flex align-items-center">
+                                    <label for="description"
+                                        class="form-label constant-width mx-2 px-2 mt-2">Description</label>
+                                    <textarea disabled name="description" class="form-control"
+                                        style="height: 80px;resize: none;">{{$customer->description}}</textarea>
+                                </div>
+                            </div>
+
                             <div class='text-center'><button type="submit" id="saveBtn" class="myBtn mt-4"
                                     disabled>Save</button></div>
                         </form>
@@ -92,6 +108,31 @@
                 </div>
             </div>
         </div>
+
+        <script>
+                            // Get the sector and subsector options
+            let sectorOptions = document.querySelector('#sector');
+            let subsectorOptions = document.querySelector('#subsector');
+
+            sectorOptions.addEventListener('change', function() {
+                subsectorOptions.innerHTML = '';
+                selectedSector = this.value;
+                let subsectors = @json($locations -> groupBy('sector'));
+                if (subsectors[selectedSector]) {
+                    subsectors[selectedSector].forEach(function(location) {
+                        let option = document.createElement('option');
+                        option.text = location.subsector;
+                        option.value = location.subsector;
+                        subsectorOptions.add(option);
+                    });
+                    subsectorOptions.disabled = false;
+                } else {
+                    subsectorOptions.disabled = true;
+                }
+            });
+
+            document.getElementById('subLabel').classList.remove('muted');
+            </script>
 
 
         <footer></footer>
@@ -104,8 +145,14 @@
 
 function enableEdit() {
     inputs = document.getElementsByTagName('input');
+    
     for (i = 0; i < inputs.length; i++) {
         inputs[i].disabled = false;
+    }
+
+    textarea = document.getElementsByTagName('textarea');
+    for (i = 0; i < textarea.length; i++) {
+        textarea[i].disabled = false;
     }
 
     drops = document.getElementsByTagName('select');

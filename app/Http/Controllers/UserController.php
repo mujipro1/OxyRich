@@ -43,9 +43,14 @@ class UserController extends Controller
                 // return view('adminView', ['admin' => $admin]);
             } elseif ($user->roll === 'employee') {
                 $employee = Employee::where('username', $credentials['username'])->first();
-                Session::put(config('session.session_employee'), $employee);
-                return view('employeeView', ['employee' => $employee]);
-            } else {
+                if ($employee->is_active == true){
+                    Session::put(config('session.session_employee'), $employee);
+                    return view('employeeView', ['employee' => $employee]);
+                }
+                else{
+                    return view('access-denied');
+                }
+            } elseif ($user->roll === 'customer') {
                 $customer = Customer::where('username', $credentials['username'])->first();
                 Session::put(config('session.session_customer'), $customer);
                 return view('customerView', ['customer' => $customer]);

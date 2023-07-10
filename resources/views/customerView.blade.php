@@ -18,39 +18,39 @@
 
         <div class="container pb-5">
             <div class="row">
-                <nav class="navbar nav2 navbar-expand-lg"></nav>
+                <nav class="navbar nav4 navbar-expand-lg"></nav>
             </div>
         </div>
 
         <div class="container">
             <div class="row">
-                <div class="mt-3 col-md-7">
-                    <div class='p-4 contlayout'>
-                        <h2> Ali Khan </h2>
-                        <p> 0300-1234567 </p>
-                        <p>alikhan@gmail.com</p>
-                        <p> 123, ABC Street, XYZ Town, Lahore </p>
-                        <button class="myBtn2">Edit</button>
+                <div class="my-3 col-md-12">
+                    <div class='p-4 contlayout' style='min-height:16vh;'>
+                        <h2 class='px-3'> {{$customer->name}} </h2>
+                        <div class='px-4 muted'> Customer </div>
+                        <div class='px-4'> {{$customer->phone_no}} </div>
+                        <div class='px-4'> {{$customer->address}} </div>
                     </div>
                 </div>
-                <div class='col-md-5 mt-3'>
+                <div class="my-3 col-md-6">
                     <div class='p-4 contlayout'>
-                        <h2> Details </h2>
+                        <h3 class='mb-4'> Details </h3>
+                        <p class="text-muted my-2 " >View your personal details, packages , bottle prices </p>
+                        <button class="myBtn3 my-2">Personal Details</button>
+                        <p class="text-muted mt-4 my-2 " >View your Orders, Invoices </p>
+                        <button class="myBtn4 my-2">Order Details</button>
+                    </div>
+                </div>
+                <div class='col-md-6 my-3'>
+                    <div class='p-4 contlayout d-flex justify-content-center'>
+                        <img style="height: 330px; width:330px;"
+                        src="{{asset('images/Bottles.jpg')}}" class='img-fluid'>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-12 my-4'>
-                    <div class='contlayout p-4'>
-                        <h2> Orders </h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
+
     <footer></footer>
     </div>
 
