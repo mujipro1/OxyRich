@@ -62,6 +62,9 @@ Route::get("dashboardC", "App\Http\Controllers\CustomerController@CustomerHome")
 
 Route::get('/logoutCustomer', 'App\Http\Controllers\UserController@logoutCustomer')->name('logoutCustomer');
 
+Route::post("DetailsCustomer", "App\Http\Controllers\CustomerController@DetailsCustomer")->name('DetailsCustomer');
+Route::get("DetailsOrderCustomer{customerId}", "App\Http\Controllers\CustomerController@DetailsOrderCustomer")->name('DetailsOrderCustomer');
+Route::post("DetailsOrderCustomer{customerId}", "App\Http\Controllers\CustomerController@Details2OrderCustomer")->name('DetailsOrderCustomer');
 // --------------------------------------
 });
 
@@ -91,6 +94,7 @@ Route::middleware('ordercheck')->group(function(){
     Route::get('/placeOrder{customerId}', 'App\Http\Controllers\employeeController@placeOrder')->name('placeOrder');
     Route::post('/submitSector', 'App\Http\Controllers\employeeController@submitSector')->name('submitSector');
     Route::get('/sectors', 'App\Http\Controllers\employeeController@sectors')->name('sectors');
+    Route::get('/sectors1', 'App\Http\Controllers\employeeController@sectors1')->name('sectors1');
     Route::get('/submitSector{sector}_{subsector}', 'App\Http\Controllers\employeeController@returnToSector')->name('returnToSector');
     Route::post('/submitOrder', 'App\Http\Controllers\employeeController@submitOrder')->name('submitOrder');
 });
@@ -115,7 +119,7 @@ Route::middleware('checksession')->group(function(){
 
     Route::post('/adminAuth', 'App\Http\Controllers\UserController@authenticateAdmin')->name('adminAuth');
 
-    Route::get('/customerEdit{customerId}', 'App\Http\Controllers\adminController@edit')->name('customerEdit');
+    Route::get('/editCustomer{customerId}', 'App\Http\Controllers\adminController@edit')->name('editCustomer');
 
     Route::post('/saveCustomerChanges', 'App\Http\Controllers\adminController@saveChanges')->name('saveCustomerChanges');
 

@@ -85,7 +85,8 @@
             <div class='row'>
 
                 <div class="col-md-1 mt-4"><button onclick="redirectToAdmin()" class="backBtn">
-                        < </button>
+                <svg xmlns="http://www.w3.org/2000/svg" class="backSVG" viewBox="0 0 24 24" width="812" height="812"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+            </button>
                 </div>
                 <div class="col-md-10 my-4">
                     <div class='p-4 contlayout'>
@@ -98,7 +99,9 @@
                         @endif
 
                         @if($id == 1)
-                            <button onclick="redirectToNewCustomer()" class="myBtn5">Add New | &nbsp+ </button>
+                            <button onclick="redirectToNewCustomer()" class="myBtn5">Add New
+                            <svg xmlns="http://www.w3.org/2000/svg" id="addNewSvg2" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512"><path d="M17,12c0,.553-.448,1-1,1h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1Zm7-7v14c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5V5C0,2.243,2.243,0,5,0h14c2.757,0,5,2.243,5,5Zm-2,0c0-1.654-1.346-3-3-3H5c-1.654,0-3,1.346-3,3v14c0,1.654,1.346,3,3,3h14c1.654,0,3-1.346,3-3V5Z"/></svg>
+                         </button>
                         </div>
                         <div class="row">
                             <div class="col-md-5">
@@ -263,7 +266,7 @@
 <script src="{{asset('js/header.js')}}"></script>
 <script>
 function redirectToEdit(customerId) {
-    window.location.href = '/customerEdit' + customerId;
+    window.location.href = '/editCustomer' + customerId;
 }
 
 function redirectToAdmin() {

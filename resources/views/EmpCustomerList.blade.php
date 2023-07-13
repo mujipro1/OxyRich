@@ -32,9 +32,13 @@
 
         <div class="container side">
             <div class='row'>
-
+                @if($id == 1)
+                <div class="col-md-1 mt-4"><button onclick="window.location.href='/sectors1'" class="backBtn">
+                @elseif($id == 2)
                 <div class="col-md-1 mt-4"><button onclick="window.location.href='/sectors'" class="backBtn">
-                        < </button>
+                @endif
+                <svg xmlns="http://www.w3.org/2000/svg" class="backSVG" viewBox="0 0 24 24" width="812" height="812"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+                </button>
                 </div>
                 <div class="col-md-10 my-4">
                     <div class='p-4 contlayout'>

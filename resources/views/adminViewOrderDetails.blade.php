@@ -29,7 +29,8 @@
 
                 <div class="col-md-1 offset-md-1 pl-5 mt-4"><button onclick="window.location.href='/viewOrderDetails2'"
                         class="backBtn">
-                        < </button>
+                <svg xmlns="http://www.w3.org/2000/svg" class="backSVG" viewBox="0 0 24 24" width="812" height="812"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>    
+                    </button>
                 </div>
                 <div class="my-4 col-md-8">
                     <div class="contlayout p-4">
@@ -54,11 +55,11 @@
                                         </tr>
                                         <tr>
                                             <td class="text-start"> Sector </td>
-                                            <td class="text-start"> {{$order->customer->sector}} </td>
+                                            <td class="text-start"> {{$order->customer->location->sector}} </td>
                                         </tr>
                                         <tr>
                                             <td class="text-start"> Subsector </td>
-                                            <td class="text-start"> {{$order->customer->subsector}} </td>
+                                            <td class="text-start"> {{$order->customer->location->subsector}} </td>
                                         </tr>
                                         <tr>
                                             <td class="text-start"> Address </td>

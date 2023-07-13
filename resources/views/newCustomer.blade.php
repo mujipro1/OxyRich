@@ -35,7 +35,8 @@
             <div class="row">
 
                 <div class="col-md-1 pl-5 mt-4"><button onclick="window.location.href='/CustomerList'" class="backBtn">
-                        < </button>
+                <svg xmlns="http://www.w3.org/2000/svg" class="backSVG" viewBox="0 0 24 24" width="812" height="812"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>
+                </button>
                 </div>
                 <div class="my-4 col-md-10">
                     <div class="contlayout container p-4">

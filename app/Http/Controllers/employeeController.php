@@ -25,6 +25,7 @@ class employeeController extends Controller
 
         $sector = $req->input('sector');
         $subsector = $req->input('subsector');
+        $id = $req->input('id');
     
         if (!($sector || $subsector)){
             return redirect()->back()->with('fail', 'Please select a sector and subsector');
@@ -34,7 +35,7 @@ class employeeController extends Controller
                 $query->where('sector', $sector)->where('subsector', $subsector);
             })->get();
             
-            return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers]);
+            return view('EmpCustomerList', ['sector' => $sector, 'subsector' => $subsector, 'customers' => $customers, 'id'=>$id]);
         }
     }
 
@@ -126,18 +127,16 @@ class employeeController extends Controller
         return view('employeeView', ['employee' => $employee]);
     }
 
+    public function sectors1(){
+        $admin = Session::get(config('session.session_admin'));
+        $locations = Locations::all();
+        return view('sectorView', ['admin' => $admin, 'id' => 1,'locations'=>$locations]);
+    }
+
     public function sectors(){
         $employee = Session::get(config('session.session_employee'));
-        $id = 2;
         $locations = Locations::all();
-        $admin = Session::get(config('session.session_admin'));
-        if ($admin){
-            $id = 1;
-            return view('sectorView', ['admin' => $admin, 'id' => $id,'locations'=>$locations]);
-        }
-        else{
-            return view('sectorView', ['employee' => $employee, 'id' => $id,'locations'=>$locations]);
-        }
+        return view('sectorView', ['employee' => $employee,'id'=>2,'locations'=>$locations]);
     }
     
     public function bottleDetails($employee){

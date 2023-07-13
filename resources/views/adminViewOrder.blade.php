@@ -32,7 +32,8 @@
             <div class='row'>
 
                 <div class="col-md-1 mt-4"><button onclick="redirectToAdmin()" class="backBtn">
-                        < </button>
+                <svg xmlns="http://www.w3.org/2000/svg" class="backSVG" viewBox="0 0 24 24" width="812" height="812"><path d="M19,10.5H10.207l2.439-2.439a1.5,1.5,0,0,0-2.121-2.122L6.939,9.525a3.505,3.505,0,0,0,0,4.95l3.586,3.586a1.5,1.5,0,0,0,2.121-2.122L10.207,13.5H19a1.5,1.5,0,0,0,0-3Z"/></svg>    
+            </button>
                 </div>
                 <div class="col-md-10 my-4">
                     <div class='p-4 contlayout'>
@@ -130,7 +131,7 @@
 
                         <div class='row'>
                             <div class="col-md-12 my-2 mt-5">
-                                <div class='p-4 contlayout'>
+                                <div class='p-4 contlayout' style="min-height: 100px;">
                                     <div class="table-responsive">
                                         <!-- Add a responsive wrapper -->
                                         <table class="table table-hover">
@@ -149,6 +150,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <!-- check if orders exist -->
+                                                @if($orders->count() == 0)
+                                                <tr>
+                                                    <td colspan="9" class="text-center">
+                                                        <h5 class="my-4 muted">No orders found</h5>
+                                                    </td>
+                                                </tr>
+                                                @endif
                                                 @foreach($orders as $order)
                                                 <tr onclick="redirectToOrderDetails({{$order->order_no}})">
                                                     @if ($id == 1)
@@ -231,9 +240,10 @@
                                                         Expense</label>
                                                     @if ($expense)
                                                     <input id="petrol" type="number" name="petrol_expense"
-                                                        value="{{$expense->petrol_expense}}" class="form-control">
+                                                        value="{{$expense->petrol_expense}}" class="form-control" required>
                                                     @else
-                                                    <input id="petrol" type="number" name="petrol_expense" class="form-control">
+                                                    <input id="petrol" type="number" name="petrol_expense"
+                                                        class="form-control" required>
                                                     @endif
                                                 </div>
 
@@ -244,10 +254,10 @@
 
                                                     @if ($expense)
                                                     <input id="emp_wage" type="number" name="employee_wage"
-                                                        value="{{$expense->employee_wage}}" class="form-control">
+                                                        value="{{$expense->employee_wage}}" class="form-control" required>
                                                     @else
                                                     <input id="emp_wage" type="number" name="employee_wage"
-                                                        class="form-control">
+                                                        class="form-control" required>
                                                     @endif
                                                 </div>
 
@@ -258,10 +268,24 @@
                                                     @if ($expense)
                                                     <input id="bottle_filling_charges" type="number"
                                                         value="{{$expense->filling_charges}}"
-                                                        name="bottle_filling_charges" class="form-control">
+                                                        name="bottle_filling_charges" class="form-control" required>
                                                     @else
                                                     <input id="bottle_filling_charges" type="number"
-                                                        name="bottle_filling_charges" class="form-control">
+                                                        name="bottle_filling_charges" class="form-control" required>
+                                                    @endif
+                                                </div>
+                                                
+                                                <div class=" col-md-6 my-2 d-flex align-items-center">
+                                                    <label for="others"
+                                                        class="form-label constant-width2 mx-3 mt-2">Others
+                                                        </label>
+
+                                                    @if ($expense)
+                                                    <input id="others" type="number" name="others"
+                                                        value="{{$expense->others}}" class="form-control" required>
+                                                    @else
+                                                    <input id="others" type="number" name="others"
+                                                        class="form-control" required>
                                                     @endif
                                                 </div><br>
                                             </div>
@@ -290,7 +314,6 @@
 <script src="{{asset('js/header.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
 function redirectToAdmin() {
     // redirect to route
     window.location.href = "{{route('admin', ['admin' => $admin])}}";

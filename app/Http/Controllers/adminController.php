@@ -23,9 +23,10 @@ class adminController extends Controller
             $sum_petrol = Expense::whereMonth('created_at', date('m'))->sum('petrol_expense');
             $sum_employee = Expense::whereMonth('created_at', date('m'))->sum('employee_wage');
             $sum_filling = Expense::whereMonth('created_at', date('m'))->sum('filling_charges');
+            $others = Expense::whereMonth('created_at', date('m'))->sum('others');
             $sum_sales = Expense::whereMonth('created_at', date('m'))->sum('sales');
 
-            $profit = $sum_sales - ($sum_petrol + $sum_employee + $sum_filling);
+            $profit = $sum_sales - ($sum_petrol + $sum_employee + $sum_filling + $others);
 
             $array = array();
             $array[0] = $sum_petrol;
@@ -33,6 +34,7 @@ class adminController extends Controller
             $array[2] = $sum_filling;
             $array[3] = $sum_sales;
             $array[4] = $profit;
+            $array[5] = $others;
             
             return redirect()->route('admin', ['admin' => $admin, 'expenses' => $expenses, 'bill' => $bill, 'array' => $array]);
         } else {
@@ -48,8 +50,8 @@ class adminController extends Controller
             $sum_employee = Expense::whereMonth('created_at', date('m'))->sum('employee_wage');
             $sum_filling = Expense::whereMonth('created_at', date('m'))->sum('filling_charges');
             $sum_sales = Expense::whereMonth('created_at', date('m'))->sum('sales');
-
-            $profit = $sum_sales - ($sum_petrol + $sum_employee + $sum_filling);
+            $sum_others = Expense::whereMonth('created_at', date('m'))->sum('others');
+            $profit = $sum_sales - ($sum_petrol + $sum_employee + $sum_filling + $sum_others);
 
             $array = array();
             $array[0] = $sum_petrol;
@@ -57,6 +59,7 @@ class adminController extends Controller
             $array[2] = $sum_filling;
             $array[3] = $sum_sales;
             $array[4] = $profit;
+            $array[5] = $sum_others;
             
         return view('adminView', ['admin' => $admin, 'expenses' => $expenses, 'bill' => $bill, 'array' => $array]);
     }
@@ -417,6 +420,7 @@ class adminController extends Controller
         $petrol_expense = $request->input('petrol_expense');
         $employee_wage = $request->input('employee_wage');
         $bottle_filling_charge = $request->input('bottle_filling_charges');
+        $others = $request->input('others');
 
         $date = date('Y-m-d');
 
@@ -427,6 +431,7 @@ class adminController extends Controller
             $expense->petrol_expense = $petrol_expense;
             $expense->employee_wage = $employee_wage;
             $expense->filling_charges = $bottle_filling_charge;
+            $expense->others = $others;
             $expense->save();
 
             return redirect()->back()->with('success', 'Expense Updated!');
@@ -437,6 +442,7 @@ class adminController extends Controller
             $expense->petrol_expense = $petrol_expense;
             $expense->employee_wage = $employee_wage;
             $expense->filling_charges = $bottle_filling_charge;
+            $expense->others = $others;
             $expense->no_of_daily_bottles = 0;
             $expense->sales = 0;
             $expense->created_at = $date;

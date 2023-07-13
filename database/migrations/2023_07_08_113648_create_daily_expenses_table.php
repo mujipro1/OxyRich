@@ -20,6 +20,7 @@ class CreateDailyExpensesTable extends Migration
             $table->integer('filling_charges');
             $table->integer('no_of_daily_bottles');
             $table->integer('sales');
+            $table->integer('others');
             $table->timestamp('updated_at')->nullable();            
         });
     }
